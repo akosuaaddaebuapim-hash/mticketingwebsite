@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login App</title>
+    <!-- React and ReactDOM CDN links -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel CDN for compiling JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // React Component (Login Form)
+      const { useState } = React;
+
+      const App = () => {
+          const [email, setEmail] = useState('');
+          const [password, setPassword] = useState('');
+          const [token, setToken] = useState(null);
+
+          const handleSubmit = async (e) => {
+              e.preventDefault();
+              const response = await fetch('/api/auth/login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email, password }),
+              });
+              const data = await response.json();
+              if (data.token) {
+                  setToken(data.token);
+              } else {
+                  alert('Invalid credentials');
+              }
+          };
+
+          return (
+              <div>
+                  <h1>Login to your account</h1>
+                  <form onSubmit={handleSubmit}>
+                      <input
+                          type="email"
+                          placeholder="Email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                      />
+                      <input
+                          type="password"
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                      />
+                      <button type="submit">Login</button>
+                  </form>
+                  {token && <p>Logged in! Token: {token}</p>}
+              </div>
+          );
+      };
+
+      // Rendering React App inside the root div
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+
+    <!-- Express backend logic in the server-side (Node.js) -->
+    <script>
+      const express = require('express');
+      const bodyParser = require('body-parser');
+      const cors = require('cors');
+      const app = express();
+      const PORT = 3000;
+
+      // Middleware
+      app.use(cors());
+      app.use(bodyParser.json());  // for parsing JSON requests
+      app.use(bodyParser.urlencoded({ extended: true })); // for parsing URL-encoded bodies
+
+      // Fake user data for login (to simulate API)
+      const users = [
+          { email: 'user@example.com', password: 'password123' }
+      ];
+
+      // API Route: Mock login logic
+      app.post('/api/auth/login', (req, res) => {
+          const { email, password } = req.body;
+          const user = users.find(u => u.email === email && u.password === password);
+          if (user) {
+              res.json({ token: 'mock-jwt-token' });
+          } else {
+              res.status(401).json({ message: 'Invalid credentials' });
+          }
+      });
+
+      // Serve the HTML page (front-end)
+      app.get('/', (req, res) => {
+          res.sendFile(__dirname + '/index.html');
+      });
+
+      // Start the server
+      app.listen(PORT, () => {
+          console.log(`Server is running on http://localhost:${PORT}`);
+      });
+    </script>
+</body>
+</html>
