@@ -3,107 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login App</title>
-    <!-- React and ReactDOM CDN links -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <!-- Babel CDN for compiling JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Login Prototype</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: #ffffff;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #00f2fe;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #00f2fe;
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #00aaff;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #00f2fe;
+        }
+
+        /* Responsive design for mobile devices */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .login-container h1 {
+                font-size: 1.8rem;
+            }
+
+            .input-field {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+
+            .submit-btn {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-      // React Component (Login Form)
-      const { useState } = React;
+    <div class="login-container">
+        <h1>Login</h1>
 
-      const App = () => {
-          const [email, setEmail] = useState('');
-          const [password, setPassword] = useState('');
-          const [token, setToken] = useState(null);
+        <form>
+            <!-- Email input -->
+            <input type="email" class="input-field" placeholder="Email" required>
 
-          const handleSubmit = async (e) => {
-              e.preventDefault();
-              const response = await fetch('/api/auth/login', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email, password }),
-              });
-              const data = await response.json();
-              if (data.token) {
-                  setToken(data.token);
-              } else {
-                  alert('Invalid credentials');
-              }
-          };
+            <!-- Password input -->
+            <input type="password" class="input-field" placeholder="Password" required>
 
-          return (
-              <div>
-                  <h1>Login to your account</h1>
-                  <form onSubmit={handleSubmit}>
-                      <input
-                          type="email"
-                          placeholder="Email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                      />
-                      <input
-                          type="password"
-                          placeholder="Password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                      />
-                      <button type="submit">Login</button>
-                  </form>
-                  {token && <p>Logged in! Token: {token}</p>}
-              </div>
-          );
-      };
+            <!-- Submit button -->
+            <button type="submit" class="submit-btn">Log In</button>
 
-      // Rendering React App inside the root div
-      ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+            <!-- Forgot password link -->
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+        </form>
+    </div>
 
-    <!-- Express backend logic in the server-side (Node.js) -->
-    <script>
-      const express = require('express');
-      const bodyParser = require('body-parser');
-      const cors = require('cors');
-      const app = express();
-      const PORT = 3000;
-
-      // Middleware
-      app.use(cors());
-      app.use(bodyParser.json());  // for parsing JSON requests
-      app.use(bodyParser.urlencoded({ extended: true })); // for parsing URL-encoded bodies
-
-      // Fake user data for login (to simulate API)
-      const users = [
-          { email: 'user@example.com', password: 'password123' }
-      ];
-
-      // API Route: Mock login logic
-      app.post('/api/auth/login', (req, res) => {
-          const { email, password } = req.body;
-          const user = users.find(u => u.email === email && u.password === password);
-          if (user) {
-              res.json({ token: 'mock-jwt-token' });
-          } else {
-              res.status(401).json({ message: 'Invalid credentials' });
-          }
-      });
-
-      // Serve the HTML page (front-end)
-      app.get('/', (req, res) => {
-          res.sendFile(__dirname + '/index.html');
-      });
-
-      // Start the server
-      app.listen(PORT, () => {
-          console.log(`Server is running on http://localhost:${PORT}`);
-      });
-    </script>
 </body>
 </html>
