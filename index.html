@@ -1,411 +1,611 @@
-import React, { useState } from 'react';
-import { Plane, Bus, Calendar, Search, Menu, X, Shield, Clock, CreditCard, MapPin, Phone, Mail, ChevronRight, Star, Users, CheckCircle } from 'lucide-react';
-
-export default function MyTicketGH() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('bus');
-  const [searchData, setSearchData] = useState({
-    from: '',
-    to: '',
-    date: '',
-    passengers: 1
-  });
-
-  const features = [
-    {
-      icon: Shield,
-      title: 'Secure Transactions',
-      desc: 'All transactions are confidential and secured with industry-standard encryption'
-    },
-    {
-      icon: Clock,
-      title: 'Fast & Easy',
-      desc: 'Purchasing your preferred ticket has been made fast and easy through our platform'
-    },
-    {
-      icon: CreditCard,
-      title: 'Multiple Payment Options',
-      desc: 'Pay with mobile money, cards, or other convenient payment methods'
-    },
-    {
-      icon: Users,
-      title: 'Professional Support',
-      desc: 'Professional customer support at your service anytime, anywhere'
-    }
-  ];
-
-  const ticketTypes = [
-    { id: 'bus', icon: Bus, label: 'Bus Tickets', color: 'orange' },
-    { id: 'flight', icon: Plane, label: 'Flight Tickets', color: 'blue' },
-    { id: 'event', icon: Calendar, label: 'Event Tickets', color: 'purple' }
-  ];
-
-  const popularRoutes = [
-    { from: 'Accra', to: 'Kumasi', price: '₵50', duration: '4h' },
-    { from: 'Accra', to: 'Takoradi', price: '₵45', duration: '3.5h' },
-    { from: 'Kumasi', to: 'Tamale', price: '₵60', duration: '5h' },
-    { from: 'Accra', to: 'Cape Coast', price: '₵35', duration: '2.5h' }
-  ];
-
-  const upcomingEvents = [
-    { name: 'Afrochella 2025', date: 'Dec 28, 2025', location: 'Accra', price: '₵200' },
-    { name: 'Detty Rave', date: 'Dec 26, 2025', location: 'Accra', price: '₵150' },
-    { name: 'Ghana Meets Naija', date: 'Jun 15, 2025', location: 'Accra', price: '₵180' }
-  ];
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    alert(`Searching for ${activeTab} tickets from ${searchData.from} to ${searchData.to}`);
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-2 rounded-lg">
-                <Calendar className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-gray-900">
-                  my<span className="text-orange-600">Ticket</span>GH
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myTicketGH - Your Ticket in a Click</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-25%); }
+            50% { transform: translateY(0); }
+        }
+        .animate-bounce { animation: bounce 1s infinite; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        
+        .hover-scale { transition: transform 0.3s; }
+        .hover-scale:hover { transform: scale(1.05); }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        }
+        
+        .event-card {
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-2 rounded-lg">
+                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-gray-900">
+                            my<span class="text-orange-600">Ticket</span>GH
+                        </div>
+                        <div class="text-xs text-gray-500">Your Ticket in a Click</div>
+                    </div>
                 </div>
-                <div className="text-xs text-gray-500">Your Ticket in a Click</div>
-              </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Services</a>
+                    <a href="#about" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Contact</a>
+                    <button class="bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
+                        Sign In
+                    </button>
+                </div>
+
+                <button onclick="toggleMenu()" class="md:hidden">
+                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
             </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Home</a>
+                <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Services</a>
+                <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">About</a>
+                <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Contact</a>
+                <button class="w-full bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
+                    Sign In
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Search -->
+    <section id="home" class="gradient-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Book Your Tickets in One Click
+                </h1>
+                <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                    Your one-stop online shop for bus, flight, and event tickets in Ghana
+                </p>
+            </div>
+
+            <!-- Ticket Type Tabs -->
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-wrap gap-3 justify-center mb-6">
+                    <button onclick="setActiveTab('bus')" id="tab-bus" class="tab-btn active flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white text-orange-600 shadow-lg scale-105">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                        </svg>
+                        <span>Bus Tickets</span>
+                    </button>
+                    <button onclick="setActiveTab('flight')" id="tab-flight" class="tab-btn flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white/20 text-white hover:bg-white/30">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        <span>Flight Tickets</span>
+                    </button>
+                    <button onclick="setActiveTab('event')" id="tab-event" class="tab-btn flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white/20 text-white hover:bg-white/30">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                        <span>Event Tickets</span>
+                    </button>
+                </div>
+
+                <!-- Search Form -->
+                <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">From</label>
+                            <input type="text" id="from" placeholder="Departure city" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">To</label>
+                            <input type="text" id="to" placeholder="Arrival city" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                            <input type="date" id="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+                            <select id="passengers" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <option value="1">1 Passenger</option>
+                                <option value="2">2 Passengers</option>
+                                <option value="3">3 Passengers</option>
+                                <option value="4">4 Passengers</option>
+                                <option value="5">5 Passengers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="searchTickets()" class="w-full mt-6 bg-orange-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-orange-700 transition-colors flex items-center justify-center space-x-2">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" stroke-width="2"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        <span>Search Tickets</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose myTicketGH?</h2>
+                <p class="text-xl text-gray-600">Efficient utilization and ease of use for all your ticketing needs</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Secure Transactions</h3>
+                    <p class="text-gray-600">All transactions are confidential and secured with industry-standard encryption</p>
+                </div>
+                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fast & Easy</h3>
+                    <p class="text-gray-600">Purchasing your preferred ticket has been made fast and easy through our platform</p>
+                </div>
+                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Multiple Payment Options</h3>
+                    <p class="text-gray-600">Pay with mobile money, cards, or other convenient payment methods</p>
+                </div>
+                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
+                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Professional Support</h3>
+                    <p class="text-gray-600">Professional customer support at your service anytime, anywhere</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Popular Bus Routes</h2>
+                    <p class="text-gray-600">Book your journey across Ghana with ease</p>
+                </div>
+                <button class="mt-4 md:mt-0 flex items-center space-x-2 text-orange-600 font-semibold hover:text-orange-700">
+                    <span>View All Routes</span>
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Accra</span>
+                        </div>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Kumasi</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            2.5h
+                        </div>
+                        <div class="text-2xl font-bold text-orange-600">₵35</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Upcoming Events</h2>
+                <p class="text-xl text-gray-600">Don't miss out on Ghana's hottest events</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Afrochella 2025</h3>
+                    <div class="flex items-center space-x-2 text-white/90 mb-1">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                        <span>Dec 28, 2025</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white/90 mb-4">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Accra</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold">From ₵200</span>
+                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Detty Rave</h3>
+                    <div class="flex items-center space-x-2 text-white/90 mb-1">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                        <span>Dec 26, 2025</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white/90 mb-4">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Accra</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold">From ₵150</span>
+                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Ghana Meets Naija</h3>
+                    <div class="flex items-center space-x-2 text-white/90 mb-1">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                        <span>Jun 15, 2025</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-white/90 mb-4">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Accra</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold">From ₵180</span>
+                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6">Get in Touch</h2>
+                    <p class="text-gray-300 mb-8">
+                        Have questions? Our professional customer support team is here to help you anytime, anywhere.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <div>
+                                <div class="font-semibold">Address</div>
+                                <div class="text-gray-300">One Airport Square, 8th Floor<br>Airport City, Accra - Ghana</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <div>
+                                <div class="font-semibold">Email</div>
+                                <div class="text-gray-300">info@myticketgh.com</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <div>
+                                <div class="font-semibold">Phone</div>
+                                <div class="text-gray-300">Available 24/7</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-6">Send us a Message</h3>
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white">
+                        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white">
+                        <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"></textarea>
+                        <button class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
+                            Send Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="bg-orange-600 p-2 rounded-lg">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold">myTicketGH</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Your one-stop online shop for all your ticketing needs in Ghana.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#about" class="hover:text-orange-500">About Us</a></li>
+                        <li><a href="#services" class="hover:text-orange-500">Services</a></li>
+                        <li><a href="#" class="hover:text-orange-500">FAQ</a></li>
+                        <li><a href="#contact" class="hover:text-orange-500">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-500">Bus Tickets</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Flight Tickets</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Event Tickets</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Queue Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-500">Help Center</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-500">Refund Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 myTicketGH. All rights reserved. Providing hassle-free tickets and excellent customer service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Tab switching
+        function setActiveTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(btn => {
+                btn.classList.remove('bg-white', 'text-orange-600', 'shadow-lg', 'scale-105');
+                btn.classList.add('bg-white/20', 'text-white');
+            });
             
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Home</a>
-              <a href="#services" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Services</a>
-              <a href="#about" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">About</a>
-              <a href="#contact" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">Contact</a>
-              <button className="bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
-                Sign In
-              </button>
-            </div>
+            const activeTab = document.getElementById(`tab-${tab}`);
+            activeTab.classList.remove('bg-white/20', 'text-white');
+            activeTab.classList.add('bg-white', 'text-orange-600', 'shadow-lg', 'scale-105');
+        }
 
-            <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
-              {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
+        // Search tickets
+        function searchTickets() {
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const date = document.getElementById('date').value;
+            const passengers = document.getElementById('passengers').value;
+            
+            if (!from || !to || !date) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            alert(`Searching for tickets from ${from} to ${to} on ${date} for ${passengers} passenger(s)`);
+        }
 
-        {menuOpen && (
-          <div className="md:hidden bg-white border-t">
-            <div className="px-4 py-4 space-y-3">
-              {['Home', 'Services', 'About', 'Contact'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
-              <button className="w-full bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
-                Sign In
-              </button>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section with Search */}
-      <section className="relative bg-gradient-to-br from-orange-600 via-orange-500 to-orange-400 py-20">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-              Book Your Tickets in One Click
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Your one-stop online shop for bus, flight, and event tickets in Ghana
-            </p>
-          </div>
-
-          {/* Ticket Type Tabs */}
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-wrap gap-3 justify-center mb-6">
-              {ticketTypes.map((type) => (
-                <button
-                  key={type.id}
-                  onClick={() => setActiveTab(type.id)}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                    activeTab === type.id
-                      ? 'bg-white text-orange-600 shadow-lg scale-105'
-                      : 'bg-white/20 text-white hover:bg-white/30'
-                  }`}
-                >
-                  <type.icon className="h-5 w-5" />
-                  <span>{type.label}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Search Form */}
-            <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-              <div className="grid md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">From</label>
-                  <input
-                    type="text"
-                    placeholder="Departure city"
-                    value={searchData.from}
-                    onChange={(e) => setSearchData({...searchData, from: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+                        <div class="text-sm text-gray-600">
+                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            4h
+                        </div>
+                        <div class="text-2xl font-bold text-orange-600">₵50</div>
+                    </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">To</label>
-                  <input
-                    type="text"
-                    placeholder="Arrival city"
-                    value={searchData.to}
-                    onChange={(e) => setSearchData({...searchData, to: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Accra</span>
+                        </div>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Takoradi</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            3.5h
+                        </div>
+                        <div class="text-2xl font-bold text-orange-600">₵45</div>
+                    </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                  <input
-                    type="date"
-                    value={searchData.date}
-                    onChange={(e) => setSearchData({...searchData, date: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  />
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Kumasi</span>
+                        </div>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Tamale</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            5h
+                        </div>
+                        <div class="text-2xl font-bold text-orange-600">₵60</div>
+                    </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
-                  <select
-                    value={searchData.passengers}
-                    onChange={(e) => setSearchData({...searchData, passengers: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  >
-                    {[1,2,3,4,5].map(num => (
-                      <option key={num} value={num}>{num} {num === 1 ? 'Passenger' : 'Passengers'}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <button
-                onClick={handleSearch}
-                className="w-full mt-6 bg-orange-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-orange-700 transition-colors flex items-center justify-center space-x-2"
-              >
-                <Search className="h-5 w-5" />
-                <span>Search Tickets</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose myTicketGH?</h2>
-            <p className="text-xl text-gray-600">Efficient utilization and ease of use for all your ticketing needs</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, idx) => (
-              <div key={idx} className="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                  <feature.icon className="h-8 w-8 text-orange-600" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Routes */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">Popular Bus Routes</h2>
-              <p className="text-gray-600">Book your journey across Ghana with ease</p>
-            </div>
-            <button className="hidden md:flex items-center space-x-2 text-orange-600 font-semibold hover:text-orange-700">
-              <span>View All Routes</span>
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularRoutes.map((route, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-5 w-5 text-orange-600" />
-                    <span className="font-semibold text-gray-900">{route.from}</span>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400" />
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-5 w-5 text-orange-600" />
-                    <span className="font-semibold text-gray-900">{route.to}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-600">
-                    <Clock className="h-4 w-4 inline mr-1" />
-                    {route.duration}
-                  </div>
-                  <div className="text-2xl font-bold text-orange-600">{route.price}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Upcoming Events</h2>
-            <p className="text-xl text-gray-600">Don't miss out on Ghana's hottest events</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {upcomingEvents.map((event, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-6 text-white shadow-xl hover:scale-105 transition-transform">
-                <div className="flex items-center space-x-2 mb-4">
-                  <Star className="h-5 w-5 text-yellow-300" />
-                  <span className="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-2">{event.name}</h3>
-                <div className="flex items-center space-x-2 text-white/90 mb-1">
-                  <Calendar className="h-4 w-4" />
-                  <span>{event.date}</span>
-                </div>
-                <div className="flex items-center space-x-2 text-white/90 mb-4">
-                  <MapPin className="h-4 w-4" />
-                  <span>{event.location}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">From {event.price}</span>
-                  <button className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-6">Get in Touch</h2>
-              <p className="text-gray-300 mb-8">
-                Have questions? Our professional customer support team is here to help you anytime, anywhere.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-4">
-                  <MapPin className="h-6 w-6 text-orange-500 mt-1" />
-                  <div>
-                    <div className="font-semibold">Address</div>
-                    <div className="text-gray-300">One Airport Square, 8th Floor<br />Airport City, Accra - Ghana</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <Mail className="h-6 w-6 text-orange-500 mt-1" />
-                  <div>
-                    <div className="font-semibold">Email</div>
-                    <div className="text-gray-300">info@myticketgh.com</div>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <Phone className="h-6 w-6 text-orange-500 mt-1" />
-                  <div>
-                    <div className="font-semibold">Phone</div>
-                    <div className="text-gray-300">Available 24/7</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-800 p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-6">Send us a Message</h3>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-                />
-                <textarea
-                  placeholder="Your Message"
-                  rows="4"
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
-                />
-                <button className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
-                  Send Message
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="bg-orange-600 p-2 rounded-lg">
-                  <Calendar className="h-6 w-6" />
-                </div>
-                <span className="text-xl font-bold">myTicketGH</span>
-              </div>
-              <p className="text-gray-400">
-                Your one-stop online shop for all your ticketing needs in Ghana.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-orange-500">About Us</a></li>
-                <li><a href="#" className="hover:text-orange-500">Services</a></li>
-                <li><a href="#" className="hover:text-orange-500">FAQ</a></li>
-                <li><a href="#" className="hover:text-orange-500">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-orange-500">Bus Tickets</a></li>
-                <li><a href="#" className="hover:text-orange-500">Flight Tickets</a></li>
-                <li><a href="#" className="hover:text-orange-500">Event Tickets</a></li>
-                <li><a href="#" className="hover:text-orange-500">Queue Management</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-orange-500">Help Center</a></li>
-                <li><a href="#" className="hover:text-orange-500">Terms & Conditions</a></li>
-                <li><a href="#" className="hover:text-orange-500">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-orange-500">Refund Policy</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 myTicketGH. All rights reserved. Providing hassle-free tickets and excellent customer service.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Accra</span>
+                        </div>
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="font-semibold text-gray-900">Cape Coast</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
