@@ -1,611 +1,644 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>myTicketGH - Your Ticket in a Click</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes bounce {
-            0%, 100% { transform: translateY(-25%); }
-            50% { transform: translateY(0); }
-        }
-        .animate-bounce { animation: bounce 1s infinite; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in { animation: fadeIn 0.6s ease-out; }
-        
-        .hover-scale { transition: transform 0.3s; }
-        .hover-scale:hover { transform: scale(1.05); }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-        }
-        
-        .event-card {
-            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-2 rounded-lg">
-                        <svg class="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold text-gray-900">
-                            my<span class="text-orange-600">Ticket</span>GH
-                        </div>
-                        <div class="text-xs text-gray-500">Your Ticket in a Click</div>
-                    </div>
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BookingForm } from '@/components/BookingForm';
+import { FeatureCard } from '@/components/FeatureCard';
+import { RouteCard } from '@/components/RouteCard';
+import { ServiceCard } from '@/components/ServiceCard';
+import { EventCard } from '@/components/EventCard';
+import { AnimatedCounter } from '@/components/ui/animated-counter';
+import { FloatingIcons } from '@/components/ui/floating-icons';
+import { AnimatedBackground } from '@/components/ui/animated-background';
+import { HeroVisual } from '@/components/ui/hero-visual';
+import { TestimonialCarousel } from '@/components/ui/testimonial-carousel';
+import { BusShowcase } from '@/components/ui/bus-showcase';
+import { PeopleGrid } from '@/components/ui/people-grid';
+import { 
+  Bus, 
+  Plane,
+  Calendar,
+  Clock, 
+  MapPin, 
+  DollarSign, 
+  Shield, 
+  Star, 
+  Phone, 
+  Mail, 
+  Smartphone,
+  Users,
+  Globe,
+  Zap,
+  CheckCircle,
+  ArrowRight,
+  Music,
+  Gamepad2,
+  Theater,
+  Trophy,
+  Heart,
+  Sparkles,
+  TrendingUp,
+  Award,
+  Camera,
+  Gift,
+  Mic,
+  PartyPopper
+} from 'lucide-react';
+
+export default function Index() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeService, setActiveService] = useState('bus');
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const services = [
+    {
+      id: 'bus',
+      icon: Bus,
+      title: "Bus Tickets 🚌",
+      description: "Book comfortable bus rides across Ghana with trusted operators and luxury amenities.",
+      gradient: "from-blue-500 to-blue-600"
+    },
+    {
+      id: 'flight',
+      icon: Plane,
+      title: "Flight Tickets ✈️",
+      description: "Fly to your destination with domestic and international flights at best prices.",
+      gradient: "from-purple-500 to-purple-600"
+    },
+    {
+      id: 'events',
+      icon: Calendar,
+      title: "Event Tickets 🎉",
+      description: "Get tickets to concerts, sports, festivals and entertainment events nationwide.",
+      gradient: "from-pink-500 to-pink-600"
+    }
+  ];
+
+  const features = [
+    {
+      icon: Clock,
+      title: "⚡ Lightning Fast Booking",
+      description: "Book your tickets in under 60 seconds with our AI-powered booking system.",
+      gradient: "from-blue-500 to-blue-600"
+    },
+    {
+      icon: Globe,
+      title: "🌍 Nationwide Coverage",
+      description: "Access 500+ routes, 50+ airlines, and 1000+ events across Ghana and beyond.",
+      gradient: "from-purple-500 to-purple-600"
+    },
+    {
+      icon: DollarSign,
+      title: "💰 Best Price Guarantee",
+      description: "We guarantee the lowest prices with our smart comparison engine and deals.",
+      gradient: "from-green-500 to-green-600"
+    },
+    {
+      icon: Shield,
+      title: "🔒 Bank-Level Security",
+      description: "Your payments and data are protected with military-grade encryption.",
+      gradient: "from-red-500 to-red-600"
+    }
+  ];
+
+  const popularRoutes = [
+    { from: "Accra 🏙️", to: "Kumasi 🌳", duration: "4h 30m", price: "₵45" },
+    { from: "Accra 🏙️", to: "Cape Coast 🏖️", duration: "2h 15m", price: "₵25" },
+    { from: "Accra 🏙️", to: "Takoradi ⛽", duration: "3h 45m", price: "₵35" },
+    { from: "Accra 🏙️", to: "Tamale 🌾", duration: "8h 20m", price: "₵80" },
+    { from: "Kumasi 🌳", to: "Accra 🏙️", duration: "4h 30m", price: "₵45" },
+    { from: "Cape Coast 🏖️", to: "Accra 🏙️", duration: "2h 15m", price: "₵25" }
+  ];
+
+  const upcomingEvents = [
+    {
+      title: "🎵 Afronation Ghana 2025",
+      date: "Dec 28-30, 2025",
+      time: "6:00 PM",
+      location: "Black Star Square, Accra 🏟️",
+      price: "₵150",
+      image: "/api/placeholder/400/300",
+      category: "🎶 Music Festival",
+      rating: 4.8,
+      attendees: 25000
+    },
+    {
+      title: "⚽ Ghana Premier League Finals",
+      date: "Jan 15, 2026",
+      time: "3:00 PM",
+      location: "Baba Yara Stadium, Kumasi 🏟️",
+      price: "₵50",
+      image: "/api/placeholder/400/300",
+      category: "🏆 Sports",
+      rating: 4.6,
+      attendees: 40000
+    },
+    {
+      title: "💻 Tech Innovation Summit",
+      date: "Feb 20-22, 2026",
+      time: "9:00 AM",
+      location: "Accra International Conference Centre 🏢",
+      price: "₵200",
+      image: "/api/placeholder/400/300",
+      category: "🚀 Technology",
+      rating: 4.9,
+      attendees: 5000
+    },
+    {
+      title: "🍽️ Ghana Food & Wine Festival",
+      date: "Mar 10-12, 2026",
+      time: "11:00 AM",
+      location: "Labadi Beach, Accra 🏖️",
+      price: "₵80",
+      image: "/api/placeholder/400/300",
+      category: "🍷 Food & Drink",
+      rating: 4.7,
+      attendees: 15000
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 relative overflow-hidden">
+      <AnimatedBackground />
+      
+      {/* Header */}
+      <header className="relative z-50 bg-white/90 backdrop-blur-md border-b border-white/20 sticky top-0 shadow-lg">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3 group">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                <Bus className="h-7 w-7 text-white group-hover:animate-pulse" />
+              </div>
+              <div>
+                <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  mTicket
+                </span>
+                <div className="flex items-center space-x-1">
+                  <Sparkles className="h-4 w-4 text-yellow-500 animate-spin" />
+                  <span className="text-xs text-gray-600 font-medium">Ghana's #1 Platform</span>
+                  <Star className="h-4 w-4 text-yellow-500 animate-pulse" />
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Home</a>
-                    <a href="#services" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Services</a>
-                    <a href="#about" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">About</a>
-                    <a href="#contact" class="text-gray-700 hover:text-orange-600 font-medium transition-colors">Contact</a>
-                    <button class="bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
-                        Sign In
-                    </button>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:scale-105 transition-all duration-300 shadow-md">
+                📍 Track Ticket
+              </Button>
+              <Button className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                👤 Sign In
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+        <FloatingIcons />
+        
+        <div className="relative z-10 container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Content */}
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+              <Badge className="mb-6 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-blue-800 border-blue-200 px-6 py-3 text-base font-bold animate-bounce shadow-lg">
+                🚀 Ghana's #1 Multi-Service Booking Platform 🎉
+              </Badge>
+              
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+                  Travel Smarter
+                </span>
+                <br />
+                <span className="text-gray-800">Live Better 🌟</span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+                Your one-stop platform for bus tickets 🚌, flights ✈️, and event bookings 🎫 across Ghana. 
+                Quick, reliable, and unforgettable experiences await! 🎊
+              </p>
+
+              <div className="grid grid-cols-3 gap-6 mb-8">
+                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="text-3xl mb-2">👥</div>
+                  <AnimatedCounter end={100000} suffix="+" />
+                  <p className="text-gray-600 text-sm group-hover:text-blue-600 transition-colors">Happy Customers</p>
                 </div>
-
-                <button onclick="toggleMenu()" class="md:hidden">
-                    <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
+                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="text-3xl mb-2">🗺️</div>
+                  <AnimatedCounter end={500} suffix="+" />
+                  <p className="text-gray-600 text-sm group-hover:text-purple-600 transition-colors">Routes & Events</p>
+                </div>
+                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
+                  <div className="text-3xl mb-2">💖</div>
+                  <AnimatedCounter end={99} suffix="%" />
+                  <p className="text-gray-600 text-sm group-hover:text-green-600 transition-colors">Satisfaction Rate</p>
+                </div>
+              </div>
             </div>
-        </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Home</a>
-                <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Services</a>
-                <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">About</a>
-                <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-orange-50 rounded-lg">Contact</a>
-                <button class="w-full bg-orange-600 text-white px-6 py-2.5 rounded-lg hover:bg-orange-700 transition-colors font-semibold">
-                    Sign In
-                </button>
+            {/* Right side - Visual */}
+            <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+              <HeroVisual />
             </div>
-        </div>
-    </nav>
+          </div>
 
-    <!-- Hero Section with Search -->
-    <section id="home" class="gradient-bg py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-                    Book Your Tickets in One Click
-                </h1>
-                <p class="text-xl text-white/90 max-w-2xl mx-auto">
-                    Your one-stop online shop for bus, flight, and event tickets in Ghana
+          {/* Service Selection */}
+          <div className={`transition-all duration-1000 delay-500 mt-16 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Choose Your Journey 🎯</h2>
+              <p className="text-gray-600 text-lg">Select the service that fits your adventure!</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  {...service}
+                  isActive={activeService === service.id}
+                  onClick={() => setActiveService(service.id)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Booking Form */}
+          <div className={`transition-all duration-1000 delay-700 mt-12 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <BookingForm />
+          </div>
+        </div>
+      </section>
+
+      {/* People Section */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Trusted by Everyone 👨‍👩‍👧‍👦
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              From business executives to students, families to professionals - everyone chooses mTicket! 🌟
+            </p>
+          </div>
+          <PeopleGrid />
+        </div>
+      </section>
+
+      {/* USSD Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full animate-ping"></div>
+          <div className="absolute bottom-10 right-10 w-16 h-16 bg-white/10 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/2 left-1/4 w-12 h-12 bg-white/10 rounded-full animate-bounce"></div>
+          <div className="absolute top-1/4 right-1/4 text-6xl animate-bounce">📱</div>
+          <div className="absolute bottom-1/4 left-1/3 text-4xl animate-pulse">💫</div>
+        </div>
+        <div className="relative z-10 container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-8xl mb-6 animate-bounce">📱</div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Try Our USSD Magic! ✨
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
+              Book bus tickets from ANY phone across Ghana! No internet needed! 🚀
+            </p>
+            <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-12 mb-8 inline-block hover:scale-105 transition-transform duration-300 shadow-2xl">
+              <p className="text-3xl mb-4 font-bold">Just Dial 📞</p>
+              <div className="text-8xl font-bold tracking-wider animate-pulse bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                *265#
+              </div>
+              <p className="text-xl mt-4 opacity-90">It's that simple! 🎉</p>
+            </div>
+            <div className="flex items-center justify-center space-x-4 text-2xl">
+              <CheckCircle className="h-8 w-8 animate-pulse" />
+              <span>Join our <AnimatedCounter end={100000} suffix="+" /> happy users! 🎊</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-20 right-20 w-32 h-32 bg-blue-100 rounded-full opacity-50 animate-pulse"></div>
+          <div className="absolute bottom-20 left-20 w-24 h-24 bg-purple-100 rounded-full opacity-50 animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl opacity-5">🚀</div>
+        </div>
+        <div className="relative z-10 container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Why Choose mTicket? 🤔
+              <br />
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Because We're Awesome! 🔥</span>
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {features.map((feature, index) => (
+              <div key={index} className={`transition-all duration-700 delay-${index * 200}`}>
+                <FeatureCard {...feature} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bus Showcase */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Premium Bus Experience 🚌✨
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Travel in comfort with our luxury buses featuring modern amenities! 🌟
+            </p>
+          </div>
+          <BusShowcase />
+        </div>
+      </section>
+
+      {/* Dynamic Content Based on Service */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <Tabs value={activeService} className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-16 bg-white/90 backdrop-blur-sm shadow-lg">
+              <TabsTrigger value="bus" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
+                🚌 Bus
+              </TabsTrigger>
+              <TabsTrigger value="flight" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
+                ✈️ Flight
+              </TabsTrigger>
+              <TabsTrigger value="events" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
+                🎉 Events
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="bus" className="space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  🔥 Hottest Bus Routes 🚌
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Choose your favorite operators and enjoy the ride! 🎊
                 </p>
-            </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                {popularRoutes.map((route, index) => (
+                  <div key={index} className={`transition-all duration-700 delay-${index * 100}`}>
+                    <RouteCard {...route} />
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
 
-            <!-- Ticket Type Tabs -->
-            <div class="max-w-4xl mx-auto">
-                <div class="flex flex-wrap gap-3 justify-center mb-6">
-                    <button onclick="setActiveTab('bus')" id="tab-bus" class="tab-btn active flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white text-orange-600 shadow-lg scale-105">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                        </svg>
-                        <span>Bus Tickets</span>
-                    </button>
-                    <button onclick="setActiveTab('flight')" id="tab-flight" class="tab-btn flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white/20 text-white hover:bg-white/30">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                        <span>Flight Tickets</span>
-                    </button>
-                    <button onclick="setActiveTab('event')" id="tab-event" class="tab-btn flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold transition-all bg-white/20 text-white hover:bg-white/30">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                        </svg>
-                        <span>Event Tickets</span>
-                    </button>
-                </div>
+            <TabsContent value="flight" className="space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  ✈️ Amazing Flight Deals 🌍
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Fly anywhere with our trusted airline partners! 🚀
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <RouteCard from="Accra 🏙️" to="Lagos 🌆" duration="1h 30m" price="₵450" />
+                <RouteCard from="Accra 🏙️" to="London 🇬🇧" duration="6h 45m" price="₵2,500" />
+                <RouteCard from="Accra 🏙️" to="Dubai 🏜️" duration="8h 20m" price="₵3,200" />
+                <RouteCard from="Kumasi 🌳" to="Accra 🏙️" duration="45m" price="₵180" />
+                <RouteCard from="Accra 🏙️" to="New York 🗽" duration="12h 30m" price="₵4,800" />
+                <RouteCard from="Accra 🏙️" to="Johannesburg 🦁" duration="4h 15m" price="₵1,800" />
+              </div>
+            </TabsContent>
 
-                <!-- Search Form -->
-                <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-                    <div class="grid md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">From</label>
-                            <input type="text" id="from" placeholder="Departure city" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">To</label>
-                            <input type="text" id="to" placeholder="Arrival city" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                            <input type="date" id="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
-                            <select id="passengers" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option value="1">1 Passenger</option>
-                                <option value="2">2 Passengers</option>
-                                <option value="3">3 Passengers</option>
-                                <option value="4">4 Passengers</option>
-                                <option value="5">5 Passengers</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button onclick="searchTickets()" class="w-full mt-6 bg-orange-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-orange-700 transition-colors flex items-center justify-center space-x-2">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <circle cx="11" cy="11" r="8" stroke-width="2"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35"/>
-                        </svg>
-                        <span>Search Tickets</span>
-                    </button>
-                </div>
-            </div>
+            <TabsContent value="events" className="space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  🎉 Hottest Events in Ghana! 🔥
+                  <Sparkles className="inline-block h-10 w-10 ml-2 text-yellow-500 animate-spin" />
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                  Don't miss the most exciting events happening across Ghana! 🎊
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                {upcomingEvents.map((event, index) => (
+                  <div key={index} className={`transition-all duration-700 delay-${index * 150}`}>
+                    <EventCard {...event} />
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
-    </section>
+      </section>
 
-    <!-- Features Section -->
-    <section id="services" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose myTicketGH?</h2>
-                <p class="text-xl text-gray-600">Efficient utilization and ease of use for all your ticketing needs</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Secure Transactions</h3>
-                    <p class="text-gray-600">All transactions are confidential and secured with industry-standard encryption</p>
-                </div>
-                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Fast & Easy</h3>
-                    <p class="text-gray-600">Purchasing your preferred ticket has been made fast and easy through our platform</p>
-                </div>
-                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Multiple Payment Options</h3>
-                    <p class="text-gray-600">Pay with mobile money, cards, or other convenient payment methods</p>
-                </div>
-                <div class="text-center p-6 rounded-xl hover:shadow-lg transition-shadow">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
-                        <svg class="h-8 w-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Professional Support</h3>
-                    <p class="text-gray-600">Professional customer support at your service anytime, anywhere</p>
-                </div>
-            </div>
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              What Our Customers Say 💬
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Real stories from real people who love mTicket! ❤️
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <TestimonialCarousel />
+            <TestimonialCarousel />
+            <TestimonialCarousel />
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Popular Routes -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
-                <div>
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">Popular Bus Routes</h2>
-                    <p class="text-gray-600">Book your journey across Ghana with ease</p>
-                </div>
-                <button class="mt-4 md:mt-0 flex items-center space-x-2 text-orange-600 font-semibold hover:text-orange-700">
-                    <span>View All Routes</span>
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Accra</span>
-                        </div>
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Kumasi</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-600">
-                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            2.5h
-                        </div>
-                        <div class="text-2xl font-bold text-orange-600">₵35</div>
-                    </div>
-                </div>
-            </div>
+      {/* Stats Section */}
+      <section className="py-20 bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          {Array.from({ length: 100 }, (_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`,
+              }}
+            />
+          ))}
+          <div className="absolute top-10 left-10 text-6xl animate-bounce">🏆</div>
+          <div className="absolute bottom-10 right-10 text-6xl animate-pulse">⭐</div>
+          <div className="absolute top-1/3 right-1/4 text-4xl animate-spin" style={{ animationDuration: '8s' }}>🎯</div>
         </div>
-    </section>
-
-    <!-- Upcoming Events -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Upcoming Events</h2>
-                <p class="text-xl text-gray-600">Don't miss out on Ghana's hottest events</p>
+        <div className="relative z-10 container mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-6xl font-bold mb-12">
+            Amazing Numbers! 📊✨
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+              <div className="text-6xl mb-4">🎫</div>
+              <AnimatedCounter end={1000000} suffix="+" />
+              <p className="text-gray-300 mt-2 text-lg">Tickets Sold</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Afrochella 2025</h3>
-                    <div class="flex items-center space-x-2 text-white/90 mb-1">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                        </svg>
-                        <span>Dec 28, 2025</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-white/90 mb-4">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span>Accra</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold">From ₵200</span>
-                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Detty Rave</h3>
-                    <div class="flex items-center space-x-2 text-white/90 mb-1">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                        </svg>
-                        <span>Dec 26, 2025</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-white/90 mb-4">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span>Accra</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold">From ₵150</span>
-                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
-                <div class="event-card rounded-2xl p-6 text-white shadow-xl hover-scale">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <span class="text-sm font-semibold bg-white/20 px-3 py-1 rounded-full">Featured</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">Ghana Meets Naija</h3>
-                    <div class="flex items-center space-x-2 text-white/90 mb-1">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                        </svg>
-                        <span>Jun 15, 2025</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-white/90 mb-4">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        <span>Accra</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold">From ₵180</span>
-                        <button class="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                            Book Now
-                        </button>
-                    </div>
-                </div>
+            <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+              <div className="text-6xl mb-4">🏆</div>
+              <AnimatedCounter end={50} suffix="+" />
+              <p className="text-gray-300 mt-2 text-lg">Awards Won</p>
             </div>
+            <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+              <div className="text-6xl mb-4">💖</div>
+              <AnimatedCounter end={98} suffix="%" />
+              <p className="text-gray-300 mt-2 text-lg">Love Rate</p>
+            </div>
+            <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
+              <div className="text-6xl mb-4">⭐</div>
+              <span className="font-bold text-5xl bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">4.9</span>
+              <p className="text-gray-300 mt-2 text-lg">App Rating</p>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-4xl font-bold mb-6">Get in Touch</h2>
-                    <p class="text-gray-300 mb-8">
-                        Have questions? Our professional customer support team is here to help you anytime, anywhere.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-start space-x-4">
-                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <div>
-                                <div class="font-semibold">Address</div>
-                                <div class="text-gray-300">One Airport Square, 8th Floor<br>Airport City, Accra - Ghana</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                            <div>
-                                <div class="font-semibold">Email</div>
-                                <div class="text-gray-300">info@myticketgh.com</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start space-x-4">
-                            <svg class="h-6 w-6 text-orange-500 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                            </svg>
-                            <div>
-                                <div class="font-semibold">Phone</div>
-                                <div class="text-gray-300">Available 24/7</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-800 p-8 rounded-2xl">
-                    <h3 class="text-2xl font-bold mb-6">Send us a Message</h3>
-                    <div class="space-y-4">
-                        <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white">
-                        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white">
-                        <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"></textarea>
-                        <button class="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors">
-                            Send Message
-                        </button>
-                    </div>
-                </div>
-            </div>
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 text-8xl animate-bounce">🚀</div>
+          <div className="absolute bottom-10 right-10 text-6xl animate-pulse">✨</div>
+          <div className="absolute top-1/3 right-1/3 text-4xl animate-spin" style={{ animationDuration: '6s' }}>🎉</div>
         </div>
-    </section>
+        <div className="relative z-10 container mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            Ready for Your Next Adventure? 🌟
+          </h2>
+          <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
+            Join thousands of satisfied customers and experience the future of booking in Ghana! 🎊
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-12 py-6 text-xl font-bold hover:scale-110 transition-all duration-300 shadow-2xl rounded-2xl">
+              🚀 Get Started Now
+              <ArrowRight className="ml-3 h-6 w-6" />
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 px-12 py-6 text-xl font-bold hover:scale-110 transition-all duration-300 rounded-2xl">
+              📱 Download App
+              <Smartphone className="ml-3 h-6 w-6" />
+            </Button>
+          </div>
+        </div>
+      </section>
 
-    <!-- Footer -->
-    <footer id="about" class="bg-black text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="bg-orange-600 p-2 rounded-lg">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
-                                <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
-                                <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold">myTicketGH</span>
-                    </div>
-                    <p class="text-gray-400">
-                        Your one-stop online shop for all your ticketing needs in Ghana.
-                    </p>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500/10 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500/10 rounded-full animate-bounce"></div>
+          <div className="absolute top-1/2 left-1/3 text-4xl opacity-10">🚌</div>
+          <div className="absolute bottom-1/3 right-1/4 text-3xl opacity-10">✈️</div>
+        </div>
+        <div className="relative z-10 container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3 group">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
+                  <Bus className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#about" class="hover:text-orange-500">About Us</a></li>
-                        <li><a href="#services" class="hover:text-orange-500">Services</a></li>
-                        <li><a href="#" class="hover:text-orange-500">FAQ</a></li>
-                        <li><a href="#contact" class="hover:text-orange-500">Contact</a></li>
-                    </ul>
+                  <span className="text-3xl font-bold">mTicket</span>
+                  <div className="flex items-center space-x-1">
+                    <Sparkles className="h-4 w-4 text-yellow-400 animate-spin" />
+                    <span className="text-xs text-gray-400">Ghana's Favorite</span>
+                    <Star className="h-4 w-4 text-yellow-400 animate-pulse" />
+                  </div>
                 </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Services</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-orange-500">Bus Tickets</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Flight Tickets</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Event Tickets</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Queue Management</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-orange-500">Help Center</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Terms & Conditions</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-orange-500">Refund Policy</a></li>
-                    </ul>
-                </div>
+              </div>
+              <p className="text-gray-400">
+                Ghana's leading multi-service booking platform for smart travelers and event enthusiasts! 🌟
+              </p>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 myTicketGH. All rights reserved. Providing hassle-free tickets and excellent customer service.</p>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-400">Quick Links 🔗</h3>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">👤</span>Create Account</a></li>
+                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">📍</span>Track Ticket</a></li>
+                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">ℹ️</span>About Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">🔄</span>Rebook</a></li>
+                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">🔒</span>Privacy Policy</a></li>
+              </ul>
             </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-purple-400">Our Services 🎯</h3>
+              <ul className="space-y-3 text-gray-400">
+                <li className="flex items-center space-x-3 hover:text-white transition-colors">
+                  <span className="text-2xl">🚌</span>
+                  <span>Bus Booking</span>
+                </li>
+                <li className="flex items-center space-x-3 hover:text-white transition-colors">
+                  <span className="text-2xl">✈️</span>
+                  <span>Flight Booking</span>
+                </li>
+                <li className="flex items-center space-x-3 hover:text-white transition-colors">
+                  <span className="text-2xl">🎉</span>
+                  <span>Event Tickets</span>
+                </li>
+                <li className="flex items-center space-x-3 hover:text-white transition-colors">
+                  <span className="text-2xl">📱</span>
+                  <span>USSD Service</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-pink-400">Contact Us 📞</h3>
+              <div className="space-y-4 text-gray-400">
+                <div className="flex items-center space-x-3 hover:text-white transition-colors group">
+                  <Phone className="h-6 w-6 group-hover:animate-ring text-green-400" />
+                  <span className="text-lg font-medium">030-398-1595</span>
+                </div>
+                <div className="flex items-center space-x-3 hover:text-white transition-colors group">
+                  <Mail className="h-6 w-6 group-hover:animate-bounce text-blue-400" />
+                  <span>support@photmediaghana.com</span>
+                </div>
+              </div>
+              
+              <div className="mt-6">
+                <h4 className="text-lg font-bold mb-4 text-yellow-400">Follow Us 📱</h4>
+                <div className="flex space-x-4">
+                  <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
+                    <span className="text-xl">📘</span>
+                  </div>
+                  <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-400 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
+                    <span className="text-xl">🐦</span>
+                  </div>
+                  <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-pink-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
+                    <span className="text-xl">📸</span>
+                  </div>
+                  <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-red-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
+                    <span className="text-xl">📺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+            <p className="text-lg">&copy; 2025 mTicket Ghana. All rights reserved. Made with ❤️ for Ghana! 🇬🇭</p>
+          </div>
         </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        // Tab switching
-        function setActiveTab(tab) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(btn => {
-                btn.classList.remove('bg-white', 'text-orange-600', 'shadow-lg', 'scale-105');
-                btn.classList.add('bg-white/20', 'text-white');
-            });
-            
-            const activeTab = document.getElementById(`tab-${tab}`);
-            activeTab.classList.remove('bg-white/20', 'text-white');
-            activeTab.classList.add('bg-white', 'text-orange-600', 'shadow-lg', 'scale-105');
-        }
-
-        // Search tickets
-        function searchTickets() {
-            const from = document.getElementById('from').value;
-            const to = document.getElementById('to').value;
-            const date = document.getElementById('date').value;
-            const passengers = document.getElementById('passengers').value;
-            
-            if (!from || !to || !date) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            alert(`Searching for tickets from ${from} to ${to} on ${date} for ${passengers} passenger(s)`);
-        }
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
-                        <div class="text-sm text-gray-600">
-                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            4h
-                        </div>
-                        <div class="text-2xl font-bold text-orange-600">₵50</div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Accra</span>
-                        </div>
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Takoradi</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-600">
-                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            3.5h
-                        </div>
-                        <div class="text-2xl font-bold text-orange-600">₵45</div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Kumasi</span>
-                        </div>
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Tamale</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-600">
-                            <svg class="h-4 w-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            5h
-                        </div>
-                        <div class="text-2xl font-bold text-orange-600">₵60</div>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer hover-scale">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Accra</span>
-                        </div>
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                        <div class="flex items-center space-x-2">
-                            <svg class="h-5 w-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <span class="font-semibold text-gray-900">Cape Coast</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
+      </footer>
+    </div>
+  );
+}
