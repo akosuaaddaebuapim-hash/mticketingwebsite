@@ -3,22 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>mTicket — Reimagined • Bus • Airline • Events</title>
+  <title>mTicket Ghana — Bus • Airline • Events</title>
 
-  <!-- Inline Google-ish font fallback stack (no external requests required) -->
   <style>
-    /* ---- Basic reset & fonts ---- */
     :root{
       --bg-1: linear-gradient(135deg,#fbfbff 0%, #f1f5ff 45%, #fff7ed 100%);
-      --accent-a: #4f46e5; /* indigo */
-      --accent-b: #06b6d4; /* teal */
+      --accent-a: #4f46e5;
+      --accent-b: #06b6d4;
       --muted: #475569;
       --card: #ffffff;
-      --glass: rgba(255,255,255,0.6);
       --radius: 14px;
     }
-    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-    body{background:var(--bg-1);color:#0f172a;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;}
+    body{background:var(--bg-1);color:#0f172a;-webkit-font-smoothing:antialiased;}
     .container{max-width:1180px;margin:0 auto;padding:22px;}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;}
     .brand{display:flex;align-items:center;gap:12px}
@@ -27,12 +24,10 @@
     nav a{margin:0 8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:14px}
     nav a:hover{color:var(--accent-a)}
     .btn{background:linear-gradient(90deg,var(--accent-a),#3b82f6);color:white;padding:10px 14px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
-    /* ---- layout ---- */
     .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:start;margin-top:12px}
     .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 12px 30px rgba(2,6,23,0.06);overflow:hidden}
     .small{font-size:13px;color:var(--muted)}
     .title-lg{font-size:34px;font-weight:800;line-height:1.02;margin:8px 0}
-    /* booking */
     .tabs{display:flex;gap:8px;margin-bottom:12px}
     .tab{flex:1;padding:10px;border-radius:10px;text-align:center;background:#f1f5f9;cursor:pointer;font-weight:800;color:#334155;border:1px solid rgba(2,6,23,0.02)}
     .tab.active{background:linear-gradient(90deg,#eef2ff,#ede9fe);color:var(--accent-a);box-shadow:0 8px 18px rgba(79,70,229,0.08)}
@@ -42,60 +37,47 @@
     .micro{font-weight:600;color:var(--muted)}
     .stats{display:flex;gap:12px;margin-top:12px}
     .stat{flex:1;background:linear-gradient(180deg,#fff,#fbfbff);padding:10px;border-radius:10px;text-align:center}
-    /* routes/events grid */
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
     .route{padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff8f0);transition:transform .28s,box-shadow .28s;cursor:default}
     .route:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.08)}
     .event {border-radius:12px; overflow:hidden; background: linear-gradient(180deg,#fff,#fffef6);}
     .event img{width:100%;height:140px;object-fit:cover;display:block}
-    /* testimonial */
     .testi{display:flex;overflow:hidden;border-radius:12px}
     .testi-inner{display:flex;gap:12px;transition:transform .6s ease}
     .testi-card{min-width:260px;padding:16px;background:white;border-radius:12px}
-    /* footer */
     footer{margin-top:22px;color:#0f172a}
     .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    /* misc */
     .muted{color:var(--muted)}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fff,#f7fbff);font-weight:700}
     .shadow-float{box-shadow:0 18px 45px rgba(2,6,23,0.08)}
-    /* responsive */
     @media (max-width:980px){
       .hero{grid-template-columns:1fr}
       header{flex-direction:column;align-items:flex-start;gap:12px}
       .footer-grid{grid-template-columns:1fr}
     }
-
-    /* subtle animated accents (pure CSS) */
-    .glow {
-      position:relative;
-    }
+    .glow { position:relative; }
     .glow::after{
-      content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(circle at 10% 10%, rgba(99,102,241,0.12), transparent 12%),
+      content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(circle at 10% 10%, rgba(79,70,229,0.12), transparent 12%),
         radial-gradient(circle at 90% 90%, rgba(6,182,212,0.08), transparent 10%);filter:blur(30px);opacity:0;transition:opacity .45s;
     }
     .glow:hover::after{opacity:1}
-    /* simple floating animation for image */
     @keyframes floaty { 0%{ transform: translateY(0px);}50%{transform: translateY(-8px);}100%{transform: translateY(0px);} }
     .floaty{animation:floaty 5s ease-in-out infinite}
-    /* focus visible style for keyboard users */
-    :focus{outline:3px solid rgba(99,102,241,0.12);outline-offset:3px}
-    /* tiny helper for visually-hidden */
+    :focus{outline:3px solid rgba(79,70,229,0.12);outline-offset:3px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- header -->
+    <!-- Header -->
     <header>
       <div class="brand">
         <div class="logo" aria-hidden>mT</div>
         <div>
-          <div style="font-weight:800;font-size:16px">mTicket</div>
-          <div class="small">Book Bus • Airline • Events</div>
+          <div style="font-weight:800;font-size:16px">mTicket Ghana</div>
+          <div class="small">Bus • Airline • Events</div>
         </div>
       </div>
-
       <nav aria-label="Main navigation">
         <a href="#features">Why</a>
         <a href="#routes">Routes</a>
@@ -105,33 +87,37 @@
       </nav>
     </header>
 
-    <!-- HERO -->
+    <!-- Hero / top -->
     <section class="hero" aria-labelledby="hero-heading">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div class="pill">
-            <!-- inline plane icon -->
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M2 16l10-4 10 4-10-12z" stroke="#334155" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M2 16l10-4 10 4-10-12z" stroke="#334155" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             Fast • Secure • Local
           </div>
           <div style="margin-left:auto">
-            <button id="speakHero" class="btn" style="background:linear-gradient(90deg,#06b6d4,#10b981)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden style="margin-right:8px;vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5zM19 9v6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Speak</button>
+            <button id="speakHero" class="btn" style="background:linear-gradient(90deg,#06b6d4,#10b981)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden style="margin-right:8px;vertical-align:middle">
+                <path d="M11 5L6 9H2v6h4l5 4V5zM19 9v6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Speak
+            </button>
           </div>
         </div>
 
         <h1 id="hero-heading" class="title-lg">Book your next <span style="background:linear-gradient(90deg,#f97316,#ef4444);-webkit-background-clip:text;color:transparent">adventure</span> — buses, flights & events</h1>
 
-        <p class="small">mTicket connects you to trusted operators, instant e-tickets, and flexible payments. Works great on mobile, USSD and web. No data? Use USSD: <strong>*265#</strong>.</p>
+        <p class="small">mTicket, by PhotMedia, is Ghana’s seamless bus-ticketing platform with aspirations to go global. Dial **<strong>*265#</strong>** on your phone to use our USSD booking system. Trusted by over 63,000 users. :contentReference[oaicite:4]{index=4}</p>
 
         <div class="card" style="margin-top:14px;">
-          <!-- Tabs -->
           <div class="tabs" role="tablist" aria-label="Booking types">
             <div class="tab active" role="tab" data-type="bus" tabindex="0">🚌 Bus</div>
             <div class="tab" role="tab" data-type="flight" tabindex="0">✈️ Airline</div>
             <div class="tab" role="tab" data-type="event" tabindex="0">🎟 Events</div>
           </div>
 
-          <!-- BUS FORM -->
           <form id="bookingForm" onsubmit="return false;" aria-live="polite">
             <div id="form-bus" class="form-pane" aria-hidden="false">
               <div class="row">
@@ -169,7 +155,6 @@
               </div>
             </div>
 
-            <!-- FLIGHT FORM -->
             <div id="form-flight" class="form-pane" style="display:none;margin-top:10px" aria-hidden="true">
               <div class="row">
                 <div>
@@ -201,7 +186,6 @@
               </div>
             </div>
 
-            <!-- EVENT FORM -->
             <div id="form-event" class="form-pane" style="display:none;margin-top:10px" aria-hidden="true">
               <div class="row">
                 <div>
@@ -229,7 +213,7 @@
             </div>
           </form>
 
-          <div id="searchResult" class="small muted" style="margin-top:12px">Try searching to see demo results — the site is fully static and works offline.</div>
+          <div id="searchResult" class="small muted" style="margin-top:12px">Try searching to see demo results — this is a static demo.</div>
 
           <div class="stats" aria-hidden style="margin-top:14px">
             <div class="stat">
@@ -248,7 +232,7 @@
         </div>
       </div>
 
-      <!-- right column visual -->
+      <!-- visual / aside -->
       <aside>
         <div class="card floaty shadow-float" style="height:240px;padding:0;overflow:hidden;position:relative">
           <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end">
@@ -265,7 +249,6 @@
               </linearGradient>
             </defs>
             <rect width="100%" height="100%" fill="url(#g1)"></rect>
-            <!-- stylized horizon -->
             <g opacity="0.18" fill="#fff">
               <circle cx="1000" cy="60" r="140"></circle>
             </g>
@@ -282,62 +265,62 @@
               <button class="btn" onclick="openEvent('Afronation Ghana')">Buy ticket</button>
             </div>
           </div>
-          <div class="small muted" style="margin-top:8px">Live music, food stalls & VIP experiences. Reserve early — seats sell out fast!</div>
+          <div class="small muted" style="margin-top:8px">Live music, food & VIP experiences. Reserve early!</div>
         </div>
       </aside>
     </section>
 
-    <!-- WHY -->
+    <!-- Why section -->
     <section id="features" class="card" style="margin-top:16px">
       <h3 style="font-size:18px;font-weight:800">Why mTicket?</h3>
       <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
         <div style="flex:1;min-width:220px">
-          <div style="font-weight:800">Local + Global operators</div>
-          <div class="small muted">We list trusted bus lines, airlines and verified event organizers.</div>
+          <div style="font-weight:800">Local + Regional Coverage</div>
+          <div class="small muted">Intercity & regional travel across Ghana with trusted bus operators. :contentReference[oaicite:5]{index=5}</div>
         </div>
         <div style="flex:1;min-width:220px">
-          <div style="font-weight:800">Payments you trust</div>
-          <div class="small muted">Mobile money, cards and secure gateways — pay the way you want.</div>
+          <div style="font-weight:800">Payments & USSD</div>
+          <div class="small muted">Book via mobile money, cards, or dial <strong>*265#</strong> if you have no data. :contentReference[oaicite:6]{index=6}</div>
         </div>
         <div style="flex:1;min-width:220px">
-          <div style="font-weight:800">Offline booking (USSD)</div>
-          <div class="small muted">Dial <strong>*265#</strong> to book without data.</div>
+          <div style="font-weight:800">Trusted Platform</div>
+          <div class="small muted">Over 63,000 users trust mTicket for seamless and transparent ticketing. :contentReference[oaicite:7]{index=7}</div>
         </div>
       </div>
     </section>
 
-    <!-- popular routes -->
+    <!-- Popular routes -->
     <section id="routes" class="card" style="margin-top:16px">
       <h3 style="font-size:18px;font-weight:800">Popular Routes</h3>
       <div class="grid" id="routesList" aria-live="polite">
-        <!-- populated by JS -->
+        <!-- JS populates -->
       </div>
     </section>
 
-    <!-- events -->
+    <!-- Events -->
     <section id="events" class="card" style="margin-top:16px">
       <h3 style="font-size:18px;font-weight:800">Upcoming Events & Festivals</h3>
       <div class="grid" id="eventsList" aria-live="polite">
-        <!-- populated by JS -->
+        <!-- JS populates -->
       </div>
     </section>
 
-    <!-- testimonials -->
+    <!-- Testimonials -->
     <section class="card" style="margin-top:16px">
       <h3 style="font-size:18px;font-weight:800">What people say</h3>
       <div class="testi" style="margin-top:12px">
         <div class="testi-inner" id="testiInner" style="transform:translateX(0)">
           <div class="testi-card">
             <div style="font-weight:800">Ama K.</div>
-            <div class="small muted" style="margin-top:6px">"Booked a bus to Cape Coast quickly. E-ticket worked perfectly."</div>
+            <div class="small muted" style="margin-top:6px">"Booked a bus to Cape Coast quickly with mTicket. E-ticket worked perfectly."</div>
           </div>
           <div class="testi-card">
             <div style="font-weight:800">Kwame A.</div>
-            <div class="small muted" style="margin-top:6px">"I used the USSD flow to reserve for my family — seamless."</div>
+            <div class="small muted" style="margin-top:6px">"USSD booking for my family was seamless even without data."</div>
           </div>
           <div class="testi-card">
             <div style="font-weight:800">Nana P.</div>
-            <div class="small muted" style="margin-top:6px">"Great prices on events. VIP passes were a breeze."</div>
+            <div class="small muted" style="margin-top:6px">"Prices for events were fair. VIP access was smooth."</div>
           </div>
         </div>
       </div>
@@ -347,11 +330,11 @@
       </div>
     </section>
 
-    <!-- newsletter / contact -->
+    <!-- Newsletter / Contact -->
     <section id="contact" class="card" style="margin-top:16px;display:flex;justify-content:space-between;gap:12px;align-items:center">
       <div>
-        <div style="font-weight:800">Stay updated — deals, promos & launches</div>
-        <div class="small muted" style="margin-top:6px">Join our newsletter and be first to know about early-bird tickets.</div>
+        <div style="font-weight:800">Stay updated — promos, events & launches</div>
+        <div class="small muted" style="margin-top:6px">Join our newsletter for early access to ticket releases.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <input id="newsletterEmail" placeholder="Your email" />
@@ -359,12 +342,12 @@
       </div>
     </section>
 
-    <!-- footer -->
+    <!-- Footer -->
     <footer class="card" style="margin-top:16px">
       <div class="footer-grid">
         <div>
-          <div style="font-weight:800">mTicket</div>
-          <div class="small muted" style="margin-top:8px">Fast ticketing for buses, flights and events across Ghana. USSD supported. Built with ❤️ by Akosua.</div>
+          <div style="font-weight:800">mTicket Ghana</div>
+          <div class="small muted" style="margin-top:8px">A PhotMedia product. NCA-licensed. Bus & event ticketing across Ghana. Office: 5922 Spintex Rd, Office F13-B, Galleria Mall, Accra. :contentReference[oaicite:8]{index=8}</div>
         </div>
         <div>
           <div style="font-weight:800">Quick Links</div>
@@ -377,21 +360,17 @@
         <div>
           <div style="font-weight:800">Follow us</div>
           <div style="display:flex;gap:12px;margin-top:8px">
-            <!-- inline simple social icons -->
-            <a href="#" aria-label="Twitter" title="Twitter" style="text-decoration:none;color:inherit">🐦</a>
-            <a href="#" aria-label="Facebook" title="Facebook" style="text-decoration:none;color:inherit">📘</a>
-            <a href="#" aria-label="Instagram" title="Instagram" style="text-decoration:none;color:inherit">📸</a>
+            <a href="https://www.instagram.com/mticketghana/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram" style="text-decoration:none;color:inherit">📸</a>
+            <!-- Add more social links -->
           </div>
         </div>
       </div>
-
-      <div class="small muted" style="margin-top:12px">© <span id="year"></span> mTicket • Designed by Akosua • All rights reserved</div>
+      <div class="small muted" style="margin-top:12px">© <span id="year"></span> mTicket Ghana • All rights reserved</div>
     </footer>
   </div>
 
-  <!-- Inline JS: interactivity, sample data, TTS -->
   <script>
-    /* ---------- sample data (replace with real content from mticketgh.com) ---------- */
+    // Sample data
     const ROUTES = [
       {from:'Accra', to:'Kumasi', dur:'4h 30m', price:'₵45', seats:12},
       {from:'Accra', to:'Cape Coast', dur:'2h 15m', price:'₵25', seats:8},
@@ -405,12 +384,11 @@
       {title:'Tech Innovation Summit', date:'Feb 20-22, 2026', price:'₵200', location:'Accra Conference Center'}
     ];
 
-    /* ---------- helpers ---------- */
     function el(q){ return document.querySelector(q) }
     function elAll(q){ return Array.from(document.querySelectorAll(q)) }
-    function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]) }
 
-    /* ---------- populate routes and events ---------- */
+    // Populate routes & events
     const routesList = el('#routesList');
     ROUTES.forEach(r => {
       const d = document.createElement('div');
@@ -453,7 +431,6 @@
       eventsList.appendChild(d);
     });
 
-    /* ---------- tabs logic ---------- */
     elAll('.tab').forEach(t => {
       t.addEventListener('click', () => {
         elAll('.tab').forEach(x => x.classList.remove('active'));
@@ -466,17 +443,16 @@
         el('#form-flight').setAttribute('aria-hidden', type !== 'flight');
         el('#form-event').setAttribute('aria-hidden', type !== 'event');
       });
-      t.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { t.click(); e.preventDefault(); }});
+      t.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') { t.click(); e.preventDefault(); }});
     });
 
-    /* ---------- demo search & tts ---------- */
     function doSearch(kind='bus'){
       const res = el('#searchResult');
       if(kind === 'bus'){
         const f = el('#from').value || 'Accra';
         const to = el('#to').value || 'Kumasi';
         const d = el('#date').value || 'soon';
-        res.innerHTML = `Searching buses from <strong>${escapeHtml(f)}</strong> to <strong>${escapeHtml(to)}</strong> on <strong>${escapeHtml(d)}</strong> — showing demo matches.`;
+        res.innerHTML = `Searching buses from <strong>${escapeHtml(f)}</strong> to <strong>${escapeHtml(to)}</strong> on <strong>${escapeHtml(d)}</strong> — demo results.`;
         speak(`Searching buses from ${f} to ${to} on ${d}`);
       } else if(kind === 'flight'){
         const f = el('#f-from').value || 'Accra';
@@ -486,28 +462,28 @@
         speak(`Searching flights from ${f} to ${to} on ${d}`);
       } else {
         const ev = el('#ev-select').value;
-        res.innerHTML = `Looking up <strong>${escapeHtml(ev)}</strong> — best seats shown below.`;
+        res.innerHTML = `Looking up <strong>${escapeHtml(ev)}</strong> — best seats displayed below.`;
         speak(`Looking up ${ev}`);
       }
-      // subtle entry animation
       res.style.opacity = 0;
       res.animate([{opacity:0, transform:'translateY(8px)'},{opacity:1, transform:'translateY(0)'}], { duration:420, easing:'ease-out', fill:'forwards' });
     }
 
     function bookSample(f,t,p){
-      const msg = `Sample booking: ${f} to ${t} — ${p}. Proceed to checkout to complete payment.`;
+      const msg = `Sample booking: ${f} to ${t} — ${p}. Proceed to checkout.`;
       alert(msg);
       speak('Booking selected. Proceed to checkout.');
     }
-
     function openEvent(title){
-      alert('Event: ' + title + '\n(This is a demo. Replace with checkout modal.)');
+      alert('Event: ' + title + ' (demo) — replace with real checkout.');
       speak('Opening event ' + title);
     }
-    function openUSSD(){ alert('Dial *265# on your phone to book via USSD (demo).'); speak('Dial star two six five hash to book via USSD.'); }
-    function openPhone(number){ window.open(number,'_self'); }
+    function openUSSD(){
+      alert('Dial *265# on your phone to book via USSD.');
+      speak('Dial star two six five hash to book via USSD.');
+    }
+    function openPhone(num){ window.open(num, '_self'); }
 
-    /* ---------- testimonial slider ---------- */
     let testiPos = 0;
     function slideTesti(dir){
       testiPos += dir;
@@ -518,7 +494,6 @@
       inner.style.transform = `translateX(-${testiPos * 280}px)`;
     }
 
-    /* ---------- animated counters ---------- */
     function animateCounter(id, to){
       const eln = document.getElementById(id);
       let start = null;
@@ -530,65 +505,53 @@
       }
       requestAnimationFrame(step);
     }
-    animateCounter('soldCounter', 123456);
+    animateCounter('soldCounter', 63000);  // use real user count (63K+ from site)
     animateCounter('routesCounter', ROUTES.length);
     animateCounter('opsCounter', 42);
 
-    /* ---------- newsletter ---------- */
     function subscribe(){
-      const email = el('#newsletterEmail').value || '(no email)';
-      alert('Thanks — ' + email + ' added to our mailing list (demo).');
-      speak('Thanks for subscribing. Check your email for confirmation.');
+      const em = el('#newsletterEmail').value || '(no email)';
+      alert('Thanks — ' + em + ' added to the mailing list.');
+      speak('Thanks for subscribing.');
     }
 
-    /* ---------- speak (Web Speech API) ---------- */
-    function speak(text, lang='en-US', rate=1){
+    function speak(txt, lang='en-US', rate=1){
       try {
         if(!('speechSynthesis' in window)) return;
-        const utter = new SpeechSynthesisUtterance(text);
+        const utter = new SpeechSynthesisUtterance(txt);
         utter.lang = lang;
         utter.rate = rate;
         const voices = window.speechSynthesis.getVoices();
         if(voices && voices.length){
-          // prefer english voice
-          const v = voices.find(v=>v.lang.includes('en')) || voices[0];
+          const v = voices.find(v => v.lang.includes('en')) || voices[0];
           if(v) utter.voice = v;
         }
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utter);
-      } catch(e){ console.error('TTS', e); }
+      } catch(e){ console.error('TTS error', e); }
     }
-    el('#speakHero').addEventListener('click', ()=> {
-      speak('m Ticket. Book buses, flights and events faster. Try the quick booking or dial star two six five hash to book with USSD.');
+    el('#speakHero').addEventListener('click', () => {
+      speak('Welcome to mTicket Ghana. Book buses, flights, and events faster. Dial star two six five hash to book via USSD.');
     });
 
-    /* ---------- small helpers ---------- */
     document.getElementById('year').textContent = new Date().getFullYear();
+    el('#bookingForm').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doSearch(); }});
+    el('#signinBtn').addEventListener('click', () => { alert('Sign in demo.'); speak('Opening sign in.'); });
 
-    // keyboard accessibility for booking form: Enter triggers default search
-    el('#bookingForm').addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); doSearch(); } });
-
-    // demo sign-in
-    el('#signinBtn').addEventListener('click', ()=> { alert('Sign in demo — implement auth (OAuth/JWT) for production.'); speak('Opening demo sign in.'); });
-
-    // set default dates to 3 days from now
-    (function setDefaultDates(){
-      const d = new Date(); d.setDate(d.getDate() + 3); const iso = d.toISOString().slice(0,10);
+    // default date set (3 days ahead)
+    (function(){
+      const d = new Date(); d.setDate(d.getDate()+3);
+      const iso = d.toISOString().slice(0,10);
       if(el('#date')) el('#date').value = iso;
       if(el('#f-date')) el('#f-date').value = iso;
       if(el('#ev-date')) el('#ev-date').value = iso;
     })();
 
-    // basic focus hint for keyboard users
-    document.addEventListener('keydown', (e)=> { if(e.key === 'Tab') document.body.classList.add('keyboard'); });
-
-    /* ---------- small UX polish: announce route count for screen readers ---------- */
-    setTimeout(()=> {
-      const routesCount = ROUTES.length;
+    setTimeout(() => {
       const acc = document.createElement('div');
       acc.className = 'sr-only';
       acc.setAttribute('aria-live','polite');
-      acc.textContent = `${routesCount} popular routes loaded.`;
+      acc.textContent = `${ROUTES.length} popular routes loaded.`;
       document.body.appendChild(acc);
     }, 800);
   </script>
