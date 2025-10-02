@@ -1,204 +1,596 @@
-import React, { useState, useEffect, useMemo } from 'react';
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>mTicket — Reimagined • Bus • Airline • Events</title>
 
-// --- Inline SVG Icons ---
-const Bus = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 6V4"/><path d="M16 6V4"/><path d="M12 18H2v4h20v-4h-10"/><path d="M22 6h-2a2 2 0 0 0-2 2v10h4V8a2 2 0 0 0-2-2"/><path d="M12 10v6"/><path d="M2 10v6"/><path d="M6 10v6"/><path d="M18 10v6"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>;
-const Plane = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 20.5 17c.5-.5.8-1.4.8-2v-4c0-.7-.2-1.3-.8-2L17.8 4.8c-.8-.8-1.8-1.2-2.8-1.2H9c-1 0-2 .4-2.8 1.2L3.5 9c-.5.5-.8 1.4-.8 2v4c0 .7.2 1.3.8 2l2.7 2.2c.8.8 1.8 1.2 2.8 1.2h6c1 0 2-.4 2.8-1.2z"/><path d="M15 15H9v-2h6v2z"/><path d="M15 11H9V9h6v2z"/><path d="M15 7H9V5h6v2z"/></svg>;
-const Calendar = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
-const Clock = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
-const MapPin = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21.7C17.3 17 20 13 20 10A8 8 0 0 0 12 2a8 8 0 0 0-8 8c0 3 2.7 7 8 11.7z"/><circle cx="12" cy="10" r="3"/></svg>;
-const DollarSign = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
-const Shield = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
-const Star = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
-const Phone = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3.06a2 2 0 0 1-2.2 1.94 17.42 17.42 0 0 1-13.88-13.88A2 2 0 0 1 4.02 2H7.08a2 2 0 0 1 2 1.74 12.02 12.02 0 0 0 1.25 4.89 2 2 0 0 1-.41 2.1l-1.92 1.92a15 15 0 0 0 8.08 8.08l1.92-1.92a2 2 0 0 1 2.1-.41 12.02 12.02 0 0 0 4.89 1.25A2 2 0 0 1 22 16.92z"/></svg>;
-const Mail = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>;
-const Smartphone = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>;
-const Users = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
-const Globe = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
-const CheckCircle = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14 9 11"/></svg>;
-const ArrowRight = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
-const Sparkles = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>;
-
-// Button Component
-const Button = ({ children, variant, size, className = '', ...props }) => {
-    let baseStyles = 'inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors duration-300 focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none shadow-md';
-    
-    if (variant === 'outline') {
-        baseStyles += ' border bg-white text-gray-700 hover:bg-gray-50';
-    } else {
-        baseStyles += ' bg-blue-600 text-white hover:bg-blue-700';
+  <!-- Inline Google-ish font fallback stack (no external requests required) -->
+  <style>
+    /* ---- Basic reset & fonts ---- */
+    :root{
+      --bg-1: linear-gradient(135deg,#fbfbff 0%, #f1f5ff 45%, #fff7ed 100%);
+      --accent-a: #4f46e5; /* indigo */
+      --accent-b: #06b6d4; /* teal */
+      --muted: #475569;
+      --card: #ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --radius: 14px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    body{background:var(--bg-1);color:#0f172a;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    .container{max-width:1180px;margin:0 auto;padding:22px;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;background:
+      linear-gradient(135deg,var(--accent-a), #06b6d4);box-shadow:0 12px 30px rgba(79,70,229,0.12)}
+    nav a{margin:0 8px;color:var(--muted);text-decoration:none;font-weight:600;font-size:14px}
+    nav a:hover{color:var(--accent-a)}
+    .btn{background:linear-gradient(90deg,var(--accent-a),#3b82f6);color:white;padding:10px 14px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+    /* ---- layout ---- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:start;margin-top:12px}
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 12px 30px rgba(2,6,23,0.06);overflow:hidden}
+    .small{font-size:13px;color:var(--muted)}
+    .title-lg{font-size:34px;font-weight:800;line-height:1.02;margin:8px 0}
+    /* booking */
+    .tabs{display:flex;gap:8px;margin-bottom:12px}
+    .tab{flex:1;padding:10px;border-radius:10px;text-align:center;background:#f1f5f9;cursor:pointer;font-weight:800;color:#334155;border:1px solid rgba(2,6,23,0.02)}
+    .tab.active{background:linear-gradient(90deg,#eef2ff,#ede9fe);color:var(--accent-a);box-shadow:0 8px 18px rgba(79,70,229,0.08)}
+    input, select{width:100%;padding:10px;border-radius:10px;border:1px solid #e6eef8;margin-top:8px;font-size:14px}
+    .row{display:flex;gap:10px}
+    .row > *{flex:1}
+    .micro{font-weight:600;color:var(--muted)}
+    .stats{display:flex;gap:12px;margin-top:12px}
+    .stat{flex:1;background:linear-gradient(180deg,#fff,#fbfbff);padding:10px;border-radius:10px;text-align:center}
+    /* routes/events grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+    .route{padding:12px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff8f0);transition:transform .28s,box-shadow .28s;cursor:default}
+    .route:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(2,6,23,0.08)}
+    .event {border-radius:12px; overflow:hidden; background: linear-gradient(180deg,#fff,#fffef6);}
+    .event img{width:100%;height:140px;object-fit:cover;display:block}
+    /* testimonial */
+    .testi{display:flex;overflow:hidden;border-radius:12px}
+    .testi-inner{display:flex;gap:12px;transition:transform .6s ease}
+    .testi-card{min-width:260px;padding:16px;background:white;border-radius:12px}
+    /* footer */
+    footer{margin-top:22px;color:#0f172a}
+    .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    /* misc */
+    .muted{color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#fff,#f7fbff);font-weight:700}
+    .shadow-float{box-shadow:0 18px 45px rgba(2,6,23,0.08)}
+    /* responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:flex-start;gap:12px}
+      .footer-grid{grid-template-columns:1fr}
     }
 
-    if (size === 'lg') {
-        baseStyles += ' h-14 px-8 text-lg';
-    } else {
-        baseStyles += ' h-10 px-4 py-2';
+    /* subtle animated accents (pure CSS) */
+    .glow {
+      position:relative;
     }
-
-    return <button className={`${baseStyles} ${className}`} {...props}>{children}</button>;
-};
-
-// Badge Component
-const Badge = ({ children, className = '' }) => (
-    <div className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full ${className}`}>{children}</div>
-);
-
-// Animated Counter
-const AnimatedCounter = ({ end, suffix = '' }) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-        let start = 0;
-        const duration = 2000;
-        const increment = end / (duration / 16);
-        
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-                setCount(end);
-                clearInterval(timer);
-            } else {
-                setCount(Math.floor(start));
-            }
-        }, 16);
-
-        return () => clearInterval(timer);
-    }, [end]);
-
-    return <span className="text-4xl font-extrabold text-gray-900">{count.toLocaleString()}{suffix}</span>;
-};
-
-// Main App Component
-export default function App() {
-    const [isVisible, setIsVisible] = useState(false);
-    const [activeService, setActiveService] = useState('bus');
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-            {/* Header */}
-            <header className="bg-white/90 backdrop-blur-md border-b sticky top-0 z-50 shadow-lg">
-                <div className="container mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                                <Bus className="h-7 w-7 text-white" />
-                            </div>
-                            <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">mTicket</span>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <Button variant="outline">Track Ticket</Button>
-                            <Button>Sign In</Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            {/* Hero Section */}
-            <section className="py-20">
-                <div className="container mx-auto px-6">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                            <Badge className="mb-6 bg-blue-100 text-blue-800">Ghana's #1 Booking Platform</Badge>
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Travel Smarter</span>
-                                <br />
-                                <span className="text-gray-800">Live Better</span>
-                            </h1>
-                            <p className="text-xl text-gray-600 mb-8">
-                                Your one-stop platform for bus tickets, flights, and event bookings across Ghana.
-                            </p>
-                            <div className="grid grid-cols-3 gap-6">
-                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
-                                    <AnimatedCounter end={100000} suffix="+" />
-                                    <p className="text-gray-600 text-sm">Customers</p>
-                                </div>
-                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
-                                    <AnimatedCounter end={500} suffix="+" />
-                                    <p className="text-gray-600 text-sm">Routes</p>
-                                </div>
-                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
-                                    <AnimatedCounter end={99} suffix="%" />
-                                    <p className="text-gray-600 text-sm">Satisfaction</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-white rounded-3xl p-8 shadow-2xl">
-                            <div className="text-center text-8xl mb-4">🎫</div>
-                            <p className="text-2xl font-bold text-center">Your Ticket. Secured.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Services Section */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-4xl font-bold text-center mb-12">Our Services</h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl shadow-xl">
-                            <Bus className="h-12 w-12 text-blue-600 mb-4" />
-                            <h3 className="text-2xl font-bold mb-3">Bus Tickets</h3>
-                            <p className="text-gray-600">Book comfortable bus rides across Ghana</p>
-                        </div>
-                        <div className="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-3xl shadow-xl">
-                            <Plane className="h-12 w-12 text-purple-600 mb-4" />
-                            <h3 className="text-2xl font-bold mb-3">Flight Tickets</h3>
-                            <p className="text-gray-600">Fly to your destination at best prices</p>
-                        </div>
-                        <div className="p-8 bg-gradient-to-br from-pink-50 to-pink-100 rounded-3xl shadow-xl">
-                            <Calendar className="h-12 w-12 text-pink-600 mb-4" />
-                            <h3 className="text-2xl font-bold mb-3">Event Tickets</h3>
-                            <p className="text-gray-600">Get tickets to concerts and events</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* USSD Section */}
-            <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                <div className="container mx-auto px-6 text-center">
-                    <div className="text-6xl mb-6">📱</div>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Try Our USSD Service</h2>
-                    <p className="text-xl mb-8">Book from ANY phone! No internet needed!</p>
-                    <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 inline-block">
-                        <p className="text-2xl mb-2">Just Dial</p>
-                        <div className="text-6xl font-bold">*265#</div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Footer */}
-            <footer className="bg-gray-900 text-white py-12">
-                <div className="container mx-auto px-6">
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div>
-                            <h3 className="text-xl font-bold mb-4">mTicket</h3>
-                            <p className="text-gray-400">Ghana's leading booking platform</p>
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold mb-4">Contact</h3>
-                            <div className="space-y-2 text-gray-400">
-                                <p className="flex items-center"><Phone className="h-5 w-5 mr-2" /> 030-398-1595</p>
-                                <p className="flex items-center"><Mail className="h-5 w-5 mr-2" /> support@photmediaghana.com</p>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-bold mb-4">Services</h3>
-                            <ul className="space-y-2 text-gray-400">
-                                <li>Bus Booking</li>
-                                <li>Flight Booking</li>
-                                <li>Event Tickets</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                        <p>&copy; 2025 mTicket Ghana. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+    .glow::after{
+      content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(circle at 10% 10%, rgba(99,102,241,0.12), transparent 12%),
+        radial-gradient(circle at 90% 90%, rgba(6,182,212,0.08), transparent 10%);filter:blur(30px);opacity:0;transition:opacity .45s;
+    }
+    .glow:hover::after{opacity:1}
+    /* simple floating animation for image */
+    @keyframes floaty { 0%{ transform: translateY(0px);}50%{transform: translateY(-8px);}100%{transform: translateY(0px);} }
+    .floaty{animation:floaty 5s ease-in-out infinite}
+    /* focus visible style for keyboard users */
+    :focus{outline:3px solid rgba(99,102,241,0.12);outline-offset:3px}
+    /* tiny helper for visually-hidden */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden>mT</div>
+        <div>
+          <div style="font-weight:800;font-size:16px">mTicket</div>
+          <div class="small">Book Bus • Airline • Events</div>
         </div>
-    );
-}
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#features">Why</a>
+        <a href="#routes">Routes</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <button class="btn" id="signinBtn">Sign in</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <div class="pill">
+            <!-- inline plane icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M2 16l10-4 10 4-10-12z" stroke="#334155" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Fast • Secure • Local
+          </div>
+          <div style="margin-left:auto">
+            <button id="speakHero" class="btn" style="background:linear-gradient(90deg,#06b6d4,#10b981)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden style="margin-right:8px;vertical-align:middle"><path d="M11 5L6 9H2v6h4l5 4V5zM19 9v6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Speak</button>
+          </div>
+        </div>
+
+        <h1 id="hero-heading" class="title-lg">Book your next <span style="background:linear-gradient(90deg,#f97316,#ef4444);-webkit-background-clip:text;color:transparent">adventure</span> — buses, flights & events</h1>
+
+        <p class="small">mTicket connects you to trusted operators, instant e-tickets, and flexible payments. Works great on mobile, USSD and web. No data? Use USSD: <strong>*265#</strong>.</p>
+
+        <div class="card" style="margin-top:14px;">
+          <!-- Tabs -->
+          <div class="tabs" role="tablist" aria-label="Booking types">
+            <div class="tab active" role="tab" data-type="bus" tabindex="0">🚌 Bus</div>
+            <div class="tab" role="tab" data-type="flight" tabindex="0">✈️ Airline</div>
+            <div class="tab" role="tab" data-type="event" tabindex="0">🎟 Events</div>
+          </div>
+
+          <!-- BUS FORM -->
+          <form id="bookingForm" onsubmit="return false;" aria-live="polite">
+            <div id="form-bus" class="form-pane" aria-hidden="false">
+              <div class="row">
+                <div>
+                  <label class="micro">From</label>
+                  <input id="from" placeholder="Accra" value="Accra" aria-label="From city"/>
+                </div>
+                <div>
+                  <label class="micro">To</label>
+                  <input id="to" placeholder="Kumasi" value="Kumasi" aria-label="To city"/>
+                </div>
+                <div>
+                  <label class="micro">Date</label>
+                  <input id="date" type="date" aria-label="Travel date"/>
+                </div>
+              </div>
+
+              <div class="row" style="margin-top:10px;align-items:end">
+                <div>
+                  <label class="micro">Passengers</label>
+                  <input id="pax" type="number" min="1" value="1" aria-label="Passengers"/>
+                </div>
+                <div>
+                  <label class="micro">Operator</label>
+                  <select id="operator" aria-label="Operator">
+                    <option>VIP Transport</option>
+                    <option>StarBus</option>
+                    <option>Accra Lines</option>
+                  </select>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <button class="btn" id="searchBtn" onclick="doSearch('bus')">Find tickets</button>
+                  <button style="background:transparent;border:1px dashed #e2e8f0;border-radius:10px;padding:8px;font-weight:700;cursor:pointer" onclick="openUSSD()">Use USSD</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FLIGHT FORM -->
+            <div id="form-flight" class="form-pane" style="display:none;margin-top:10px" aria-hidden="true">
+              <div class="row">
+                <div>
+                  <label class="micro">From</label>
+                  <input id="f-from" value="Accra"/>
+                </div>
+                <div>
+                  <label class="micro">To</label>
+                  <input id="f-to" value="Abuja"/>
+                </div>
+                <div>
+                  <label class="micro">Date</label>
+                  <input id="f-date" type="date"/>
+                </div>
+              </div>
+              <div class="row" style="margin-top:10px;align-items:end">
+                <div>
+                  <label class="micro">Class</label>
+                  <select id="f-class"><option>Economy</option><option>Business</option></select>
+                </div>
+                <div>
+                  <label class="micro">Airline</label>
+                  <select id="airline"><option>FlyGH</option><option>CoastalAir</option></select>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <button class="btn" onclick="doSearch('flight')">Search flights</button>
+                  <button style="background:transparent;border:1px dashed #e2e8f0;border-radius:10px;padding:8px;font-weight:700;cursor:pointer" onclick="openPhone('tel:+233')">Call support</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- EVENT FORM -->
+            <div id="form-event" class="form-pane" style="display:none;margin-top:10px" aria-hidden="true">
+              <div class="row">
+                <div>
+                  <label class="micro">Event</label>
+                  <select id="ev-select"><option>Afronation</option><option>Sarkodie Concert</option><option>Tech Summit</option></select>
+                </div>
+                <div>
+                  <label class="micro">Date</label>
+                  <input id="ev-date" type="date"/>
+                </div>
+                <div>
+                  <label class="micro">Qty</label>
+                  <input id="ev-qty" type="number" value="1" min="1"/>
+                </div>
+              </div>
+              <div class="row" style="margin-top:10px;align-items:end">
+                <div>
+                  <label class="micro">Location</label>
+                  <input id="ev-loc" value="Accra Sports Stadium"/>
+                </div>
+                <div style="display:flex;align-items:end">
+                  <button class="btn" onclick="doSearch('event')">Find Events</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div id="searchResult" class="small muted" style="margin-top:12px">Try searching to see demo results — the site is fully static and works offline.</div>
+
+          <div class="stats" aria-hidden style="margin-top:14px">
+            <div class="stat">
+              <div class="small muted">Tickets sold</div>
+              <div style="font-weight:800;font-size:20px" id="soldCounter">0</div>
+            </div>
+            <div class="stat">
+              <div class="small muted">Routes</div>
+              <div style="font-weight:800;font-size:20px" id="routesCounter">0</div>
+            </div>
+            <div class="stat">
+              <div class="small muted">Operators</div>
+              <div style="font-weight:800;font-size:20px" id="opsCounter">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right column visual -->
+      <aside>
+        <div class="card floaty shadow-float" style="height:240px;padding:0;overflow:hidden;position:relative">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end">
+            <div style="padding:16px;color:white;background:linear-gradient(180deg,transparent,rgba(2,6,23,0.28))">
+              <div style="font-weight:800;font-size:16px">Next Departures</div>
+              <div class="small">Accra → Kumasi • 4h 30m • ₵45</div>
+            </div>
+          </div>
+          <svg width="100%" height="100%" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#60a5fa" stop-opacity="0.9"/>
+                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#g1)"></rect>
+            <!-- stylized horizon -->
+            <g opacity="0.18" fill="#fff">
+              <circle cx="1000" cy="60" r="140"></circle>
+            </g>
+          </svg>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div class="small muted">Featured event</div>
+              <div style="font-weight:800">Afronation Ghana • Dec 28 - 30</div>
+            </div>
+            <div>
+              <button class="btn" onclick="openEvent('Afronation Ghana')">Buy ticket</button>
+            </div>
+          </div>
+          <div class="small muted" style="margin-top:8px">Live music, food stalls & VIP experiences. Reserve early — seats sell out fast!</div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- WHY -->
+    <section id="features" class="card" style="margin-top:16px">
+      <h3 style="font-size:18px;font-weight:800">Why mTicket?</h3>
+      <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <div style="font-weight:800">Local + Global operators</div>
+          <div class="small muted">We list trusted bus lines, airlines and verified event organizers.</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div style="font-weight:800">Payments you trust</div>
+          <div class="small muted">Mobile money, cards and secure gateways — pay the way you want.</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <div style="font-weight:800">Offline booking (USSD)</div>
+          <div class="small muted">Dial <strong>*265#</strong> to book without data.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- popular routes -->
+    <section id="routes" class="card" style="margin-top:16px">
+      <h3 style="font-size:18px;font-weight:800">Popular Routes</h3>
+      <div class="grid" id="routesList" aria-live="polite">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- events -->
+    <section id="events" class="card" style="margin-top:16px">
+      <h3 style="font-size:18px;font-weight:800">Upcoming Events & Festivals</h3>
+      <div class="grid" id="eventsList" aria-live="polite">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- testimonials -->
+    <section class="card" style="margin-top:16px">
+      <h3 style="font-size:18px;font-weight:800">What people say</h3>
+      <div class="testi" style="margin-top:12px">
+        <div class="testi-inner" id="testiInner" style="transform:translateX(0)">
+          <div class="testi-card">
+            <div style="font-weight:800">Ama K.</div>
+            <div class="small muted" style="margin-top:6px">"Booked a bus to Cape Coast quickly. E-ticket worked perfectly."</div>
+          </div>
+          <div class="testi-card">
+            <div style="font-weight:800">Kwame A.</div>
+            <div class="small muted" style="margin-top:6px">"I used the USSD flow to reserve for my family — seamless."</div>
+          </div>
+          <div class="testi-card">
+            <div style="font-weight:800">Nana P.</div>
+            <div class="small muted" style="margin-top:6px">"Great prices on events. VIP passes were a breeze."</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn" onclick="slideTesti(-1)">‹</button>
+        <button class="btn" onclick="slideTesti(1)">›</button>
+      </div>
+    </section>
+
+    <!-- newsletter / contact -->
+    <section id="contact" class="card" style="margin-top:16px;display:flex;justify-content:space-between;gap:12px;align-items:center">
+      <div>
+        <div style="font-weight:800">Stay updated — deals, promos & launches</div>
+        <div class="small muted" style="margin-top:6px">Join our newsletter and be first to know about early-bird tickets.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="newsletterEmail" placeholder="Your email" />
+        <button class="btn" onclick="subscribe()">Subscribe</button>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="card" style="margin-top:16px">
+      <div class="footer-grid">
+        <div>
+          <div style="font-weight:800">mTicket</div>
+          <div class="small muted" style="margin-top:8px">Fast ticketing for buses, flights and events across Ghana. USSD supported. Built with ❤️ by Akosua.</div>
+        </div>
+        <div>
+          <div style="font-weight:800">Quick Links</div>
+          <div class="small muted" style="margin-top:8px">
+            <div>Help center</div>
+            <div>Contact</div>
+            <div>Terms & privacy</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:800">Follow us</div>
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <!-- inline simple social icons -->
+            <a href="#" aria-label="Twitter" title="Twitter" style="text-decoration:none;color:inherit">🐦</a>
+            <a href="#" aria-label="Facebook" title="Facebook" style="text-decoration:none;color:inherit">📘</a>
+            <a href="#" aria-label="Instagram" title="Instagram" style="text-decoration:none;color:inherit">📸</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="small muted" style="margin-top:12px">© <span id="year"></span> mTicket • Designed by Akosua • All rights reserved</div>
+    </footer>
+  </div>
+
+  <!-- Inline JS: interactivity, sample data, TTS -->
+  <script>
+    /* ---------- sample data (replace with real content from mticketgh.com) ---------- */
+    const ROUTES = [
+      {from:'Accra', to:'Kumasi', dur:'4h 30m', price:'₵45', seats:12},
+      {from:'Accra', to:'Cape Coast', dur:'2h 15m', price:'₵25', seats:8},
+      {from:'Accra', to:'Tamale', dur:'8h 20m', price:'₵80', seats:20},
+      {from:'Kumasi', to:'Sunyani', dur:'3h 10m', price:'₵40', seats:6},
+      {from:'Accra', to:'Ho', dur:'4h 00m', price:'₵35', seats:10}
+    ];
+    const EVENTS = [
+      {title:'Afronation Ghana 2025', date:'Dec 28-30, 2025', price:'₵150', location:'Accra Sports Stadium'},
+      {title:'Ghana Music Fest', date:'Jan 15, 2026', price:'₵50', location:'Kumasi Arena'},
+      {title:'Tech Innovation Summit', date:'Feb 20-22, 2026', price:'₵200', location:'Accra Conference Center'}
+    ];
+
+    /* ---------- helpers ---------- */
+    function el(q){ return document.querySelector(q) }
+    function elAll(q){ return Array.from(document.querySelectorAll(q)) }
+    function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+    /* ---------- populate routes and events ---------- */
+    const routesList = el('#routesList');
+    ROUTES.forEach(r => {
+      const d = document.createElement('div');
+      d.className = 'route';
+      d.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:800">${escapeHtml(r.from)} → ${escapeHtml(r.to)}</div>
+            <div class="small muted">${escapeHtml(r.dur)}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="small muted">from</div>
+            <div style="font-weight:800">${escapeHtml(r.price)}</div>
+            <div style="margin-top:8px"><button class="btn" onclick="bookSample('${escapeHtml(r.from)}','${escapeHtml(r.to)}','${escapeHtml(r.price)}')">Book</button></div>
+          </div>
+        </div>
+      `;
+      routesList.appendChild(d);
+    });
+
+    const eventsList = el('#eventsList');
+    EVENTS.forEach(e => {
+      const d = document.createElement('div');
+      d.className = 'event';
+      d.innerHTML = `
+        <div style="padding:0">
+          <div style="background:linear-gradient(90deg,#f97316,#ef4444);height:110px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800">
+            ${escapeHtml(e.title)}
+          </div>
+          <div style="padding:12px">
+            <div style="font-weight:800">${escapeHtml(e.title)}</div>
+            <div class="small muted">${escapeHtml(e.date)} • From ${escapeHtml(e.price)}</div>
+            <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+              <div class="small muted">${escapeHtml(e.location)}</div>
+              <button class="btn" onclick="openEvent('${escapeHtml(e.title)}')">Get Tickets</button>
+            </div>
+          </div>
+        </div>
+      `;
+      eventsList.appendChild(d);
+    });
+
+    /* ---------- tabs logic ---------- */
+    elAll('.tab').forEach(t => {
+      t.addEventListener('click', () => {
+        elAll('.tab').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        const type = t.dataset.type;
+        el('#form-bus').style.display = type === 'bus' ? '' : 'none';
+        el('#form-flight').style.display = type === 'flight' ? '' : 'none';
+        el('#form-event').style.display = type === 'event' ? '' : 'none';
+        el('#form-bus').setAttribute('aria-hidden', type !== 'bus');
+        el('#form-flight').setAttribute('aria-hidden', type !== 'flight');
+        el('#form-event').setAttribute('aria-hidden', type !== 'event');
+      });
+      t.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { t.click(); e.preventDefault(); }});
+    });
+
+    /* ---------- demo search & tts ---------- */
+    function doSearch(kind='bus'){
+      const res = el('#searchResult');
+      if(kind === 'bus'){
+        const f = el('#from').value || 'Accra';
+        const to = el('#to').value || 'Kumasi';
+        const d = el('#date').value || 'soon';
+        res.innerHTML = `Searching buses from <strong>${escapeHtml(f)}</strong> to <strong>${escapeHtml(to)}</strong> on <strong>${escapeHtml(d)}</strong> — showing demo matches.`;
+        speak(`Searching buses from ${f} to ${to} on ${d}`);
+      } else if(kind === 'flight'){
+        const f = el('#f-from').value || 'Accra';
+        const to = el('#f-to').value || 'Abuja';
+        const d = el('#f-date').value || 'soon';
+        res.innerHTML = `Searching flights from <strong>${escapeHtml(f)}</strong> to <strong>${escapeHtml(to)}</strong> on <strong>${escapeHtml(d)}</strong>.`;
+        speak(`Searching flights from ${f} to ${to} on ${d}`);
+      } else {
+        const ev = el('#ev-select').value;
+        res.innerHTML = `Looking up <strong>${escapeHtml(ev)}</strong> — best seats shown below.`;
+        speak(`Looking up ${ev}`);
+      }
+      // subtle entry animation
+      res.style.opacity = 0;
+      res.animate([{opacity:0, transform:'translateY(8px)'},{opacity:1, transform:'translateY(0)'}], { duration:420, easing:'ease-out', fill:'forwards' });
+    }
+
+    function bookSample(f,t,p){
+      const msg = `Sample booking: ${f} to ${t} — ${p}. Proceed to checkout to complete payment.`;
+      alert(msg);
+      speak('Booking selected. Proceed to checkout.');
+    }
+
+    function openEvent(title){
+      alert('Event: ' + title + '\n(This is a demo. Replace with checkout modal.)');
+      speak('Opening event ' + title);
+    }
+    function openUSSD(){ alert('Dial *265# on your phone to book via USSD (demo).'); speak('Dial star two six five hash to book via USSD.'); }
+    function openPhone(number){ window.open(number,'_self'); }
+
+    /* ---------- testimonial slider ---------- */
+    let testiPos = 0;
+    function slideTesti(dir){
+      testiPos += dir;
+      const inner = el('#testiInner');
+      const max = inner.children.length;
+      if(testiPos < 0) testiPos = 0;
+      if(testiPos > max - 1) testiPos = max - 1;
+      inner.style.transform = `translateX(-${testiPos * 280}px)`;
+    }
+
+    /* ---------- animated counters ---------- */
+    function animateCounter(id, to){
+      const eln = document.getElementById(id);
+      let start = null;
+      function step(ts){
+        if(!start) start = ts;
+        const progress = Math.min(1, (ts - start) / 900);
+        eln.textContent = Math.floor(progress * to).toLocaleString();
+        if(progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    animateCounter('soldCounter', 123456);
+    animateCounter('routesCounter', ROUTES.length);
+    animateCounter('opsCounter', 42);
+
+    /* ---------- newsletter ---------- */
+    function subscribe(){
+      const email = el('#newsletterEmail').value || '(no email)';
+      alert('Thanks — ' + email + ' added to our mailing list (demo).');
+      speak('Thanks for subscribing. Check your email for confirmation.');
+    }
+
+    /* ---------- speak (Web Speech API) ---------- */
+    function speak(text, lang='en-US', rate=1){
+      try {
+        if(!('speechSynthesis' in window)) return;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = lang;
+        utter.rate = rate;
+        const voices = window.speechSynthesis.getVoices();
+        if(voices && voices.length){
+          // prefer english voice
+          const v = voices.find(v=>v.lang.includes('en')) || voices[0];
+          if(v) utter.voice = v;
+        }
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      } catch(e){ console.error('TTS', e); }
+    }
+    el('#speakHero').addEventListener('click', ()=> {
+      speak('m Ticket. Book buses, flights and events faster. Try the quick booking or dial star two six five hash to book with USSD.');
+    });
+
+    /* ---------- small helpers ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // keyboard accessibility for booking form: Enter triggers default search
+    el('#bookingForm').addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); doSearch(); } });
+
+    // demo sign-in
+    el('#signinBtn').addEventListener('click', ()=> { alert('Sign in demo — implement auth (OAuth/JWT) for production.'); speak('Opening demo sign in.'); });
+
+    // set default dates to 3 days from now
+    (function setDefaultDates(){
+      const d = new Date(); d.setDate(d.getDate() + 3); const iso = d.toISOString().slice(0,10);
+      if(el('#date')) el('#date').value = iso;
+      if(el('#f-date')) el('#f-date').value = iso;
+      if(el('#ev-date')) el('#ev-date').value = iso;
+    })();
+
+    // basic focus hint for keyboard users
+    document.addEventListener('keydown', (e)=> { if(e.key === 'Tab') document.body.classList.add('keyboard'); });
+
+    /* ---------- small UX polish: announce route count for screen readers ---------- */
+    setTimeout(()=> {
+      const routesCount = ROUTES.length;
+      const acc = document.createElement('div');
+      acc.className = 'sr-only';
+      acc.setAttribute('aria-live','polite');
+      acc.textContent = `${routesCount} popular routes loaded.`;
+      document.body.appendChild(acc);
+    }, 800);
+  </script>
+</body>
+</html>
