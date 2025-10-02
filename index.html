@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-// Note: All imported components (including Shadcn/lucide) are defined inline below 
-// to ensure the application is runnable in a single file environment.
+import React, { useState, useEffect, useMemo } from 'react';
 
-// --- Inline SVG Icons (Replacing lucide-react Imports) ---
+// --- Inline SVG Icons ---
 const Bus = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 6V4"/><path d="M16 6V4"/><path d="M12 18H2v4h20v-4h-10"/><path d="M22 6h-2a2 2 0 0 0-2 2v10h4V8a2 2 0 0 0-2-2"/><path d="M12 10v6"/><path d="M2 10v6"/><path d="M6 10v6"/><path d="M18 10v6"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>;
 const Plane = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 20.5 17c.5-.5.8-1.4.8-2v-4c0-.7-.2-1.3-.8-2L17.8 4.8c-.8-.8-1.8-1.2-2.8-1.2H9c-1 0-2 .4-2.8 1.2L3.5 9c-.5.5-.8 1.4-.8 2v4c0 .7.2 1.3.8 2l2.7 2.2c.8.8 1.8 1.2 2.8 1.2h6c1 0 2-.4 2.8-1.2z"/><path d="M15 15H9v-2h6v2z"/><path d="M15 11H9V9h6v2z"/><path d="M15 7H9V5h6v2z"/></svg>;
 const Calendar = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
@@ -16,467 +14,60 @@ const Mail = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width
 const Smartphone = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>;
 const Users = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
 const Globe = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
-const Zap = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
 const CheckCircle = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14 9 11"/></svg>;
 const ArrowRight = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
 const Sparkles = (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>;
-// Removed other unused icons for brevity, keeping only used ones or defining key ones for context.
 
-// --- Helper Functions and Custom Components (Replacing Imports) ---
-
-// 1. Shadcn/UI Replacements (minimal implementation)
+// Button Component
 const Button = ({ children, variant, size, className = '', ...props }) => {
-    let baseStyles = 'inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-md';
+    let baseStyles = 'inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors duration-300 focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none shadow-md';
     
-    // Variant styling
     if (variant === 'outline') {
         baseStyles += ' border bg-white text-gray-700 hover:bg-gray-50';
     } else {
-        baseStyles += ' bg-blue-600 text-white hover:bg-blue-700'; // Default button
+        baseStyles += ' bg-blue-600 text-white hover:bg-blue-700';
     }
 
-    // Size styling
     if (size === 'lg') {
         baseStyles += ' h-14 px-8 text-lg';
     } else {
         baseStyles += ' h-10 px-4 py-2';
     }
 
-    return (
-        <button className={`${baseStyles} ${className}`} {...props}>
-            {children}
-        </button>
-    );
+    return <button className={`${baseStyles} ${className}`} {...props}>{children}</button>;
 };
 
-const Badge = ({ children, className = '', ...props }) => {
-    return (
-        <div className={`inline-flex items-center px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full ${className}`} {...props}>
-            {children}
-        </div>
-    );
-};
-
-const Tabs = ({ value, className = '', children }) => (
-    <div className={className}>{children}</div>
+// Badge Component
+const Badge = ({ children, className = '' }) => (
+    <div className={`inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full ${className}`}>{children}</div>
 );
 
-const TabsList = ({ className = '', children }) => (
-    <div className={`flex items-center justify-center p-1 bg-gray-100 rounded-xl ${className}`}>
-        {children}
-    </div>
-);
-
-const TabsTrigger = ({ value, className = '', children, ...props }) => (
-    <button 
-        className={`flex-1 px-4 py-2 rounded-xl transition-all duration-300 text-gray-700 data-[state=active]:shadow-lg ${className}`} 
-        data-state={props.activeService === value ? 'active' : 'inactive'}
-        onClick={() => props.setActiveService(value)}
-    >
-        {children}
-    </button>
-);
-
-const TabsContent = ({ value, className = '', children, activeService }) => {
-    return activeService === value ? <div className={className}>{children}</div> : null;
-};
-
-// 2. Complex Custom Components
-
+// Animated Counter
 const AnimatedCounter = ({ end, suffix = '' }) => {
     const [count, setCount] = useState(0);
-    const duration = 2000; // milliseconds
-    const step = Math.ceil(end / (duration / 16)); // ~60fps
 
     useEffect(() => {
-        let currentCount = 0;
-        const interval = setInterval(() => {
-            currentCount += step;
-            if (currentCount >= end) {
+        let start = 0;
+        const duration = 2000;
+        const increment = end / (duration / 16);
+        
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
                 setCount(end);
-                clearInterval(interval);
+                clearInterval(timer);
             } else {
-                setCount(currentCount);
+                setCount(Math.floor(start));
             }
-        }, 16); // ~60fps
+        }, 16);
 
-        return () => clearInterval(interval);
-    }, [end, step]);
+        return () => clearInterval(timer);
+    }, [end]);
 
-    return (
-        <span className="text-4xl font-extrabold text-gray-900 leading-none block">
-            {count.toLocaleString()}
-            {suffix}
-        </span>
-    );
+    return <span className="text-4xl font-extrabold text-gray-900">{count.toLocaleString()}{suffix}</span>;
 };
 
-const FloatingIcons = () => {
-    const icons = ['🚌', '✈️', '🎉', '🌟', '🎫', '🏆', '🗺️', '💖'];
-    return (
-        <div className="absolute inset-0 overflow-hidden opacity-30">
-            {icons.map((icon, index) => (
-                <div
-                    key={index}
-                    className="absolute text-5xl animate-float"
-                    style={{
-                        left: `${Math.random() * 90 + 5}%`,
-                        top: `${Math.random() * 90 + 5}%`,
-                        animationDelay: `${Math.random() * 10}s`,
-                        animationDuration: `${15 + Math.random() * 10}s`,
-                    }}
-                >
-                    {icon}
-                </div>
-            ))}
-            <style jsx="true">{`
-                @keyframes float {
-                    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-                    50% { transform: translate(20px, 20px) rotate(15deg); opacity: 0.8; }
-                    100% { transform: translate(0, 0) rotate(0deg); opacity: 0.5; }
-                }
-                .animate-float {
-                    animation: float infinite alternate ease-in-out;
-                }
-            `}</style>
-        </div>
-    );
-};
-
-const AnimatedBackground = () => {
-    return (
-        <div className="absolute inset-0 overflow-hidden -z-10">
-            <div className="absolute w-[200px] h-[200px] bg-blue-300/30 rounded-full top-[-50px] left-[-50px] blur-3xl animate-blob" style={{ animationDelay: '0s' }}></div>
-            <div className="absolute w-[300px] h-[300px] bg-purple-300/30 rounded-full bottom-[-100px] right-[-100px] blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
-            <div className="absolute w-[150px] h-[150px] bg-pink-300/30 rounded-full top-[40%] right-[10%] blur-3xl animate-blob" style={{ animationDelay: '8s' }}></div>
-            <style jsx="true">{`
-                @keyframes blob {
-                    0% { transform: translate(0, 0) scale(1); }
-                    33% { transform: translate(30px, -50px) scale(1.1); }
-                    66% { transform: translate(-20px, 20px) scale(0.9); }
-                    100% { transform: translate(0, 0) scale(1); }
-                }
-                .animate-blob {
-                    animation: blob 12s infinite ease-in-out alternate;
-                }
-            `}</style>
-        </div>
-    );
-};
-
-const HeroVisual = () => (
-    <div className="relative w-full h-[400px] lg:h-[550px] bg-white rounded-3xl p-6 shadow-2xl border-4 border-gray-100 overflow-hidden transform hover:rotate-1 transition-transform duration-500">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 opacity-50"></div>
-        <div className="relative h-full flex items-center justify-center">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>
-            <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" style={{ animationDuration: '12s', animationDelay: '0s' }}></div>
-            
-            <div className="relative z-10 text-center">
-                <div className="text-8xl mb-4 animate-bounce">
-                    🎫
-                </div>
-                <p className="text-2xl font-bold text-gray-800">Your Ticket. Secured.</p>
-                <p className="text-md text-gray-600">Scan & Go!</p>
-            </div>
-            
-            <div className="absolute bottom-0 right-0 p-4 text-sm text-gray-500 bg-white/70 backdrop-blur-sm rounded-tl-xl shadow-inner">
-                mTicket Live Demo
-            </div>
-        </div>
-    </div>
-);
-
-const ServiceCard = ({ icon: Icon, title, description, gradient, isActive, onClick }) => (
-    <div
-        className={`p-6 rounded-3xl shadow-xl transition-all duration-300 cursor-pointer border-4 
-            ${isActive 
-                ? `bg-white border-4 border-transparent ring-4 ring-blue-500/50 transform scale-105 hover:shadow-2xl`
-                : 'bg-white border-gray-100 hover:shadow-lg hover:border-blue-300'
-            }
-        `}
-        onClick={onClick}
-    >
-        <div className={`p-4 rounded-xl inline-flex mb-4 text-white bg-gradient-to-r ${gradient} shadow-lg`}>
-            <Icon className="h-8 w-8" />
-        </div>
-        <h3 className="text-xl font-bold mb-2 text-gray-900">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-        <div className={`mt-3 text-sm font-semibold transition-colors ${isActive ? 'text-blue-600' : 'text-gray-500'}`}>
-            {isActive ? 'Active Service' : 'Select'} <ArrowRight className="inline h-4 w-4 ml-1" />
-        </div>
-    </div>
-);
-
-const BookingForm = () => {
-    // Mock state and function for the form
-    const [formState, setFormState] = useState({
-        service: 'bus',
-        from: 'Accra',
-        to: 'Kumasi',
-        date: '2025-10-20',
-        pax: 1
-    });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Booking submitted:', formState);
-        // In a real app, this would trigger an API call or navigation
-        // For now, we'll just simulate a success message visually
-        alert("Booking Search Initiated! Finding the best deals for you..."); // Using alert() temporarily for demonstration, but typically replaced by a modal.
-    };
-
-    const InputField = ({ label, type = 'text', value, onChange, options, icon: Icon, placeholder = '', className = '' }) => (
-        <div className={`relative ${className}`}>
-            <label className="text-sm font-medium text-gray-700 block mb-1">{label}</label>
-            <div className="relative">
-                {Icon && <Icon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-500" />}
-                {options ? (
-                    <select
-                        value={value}
-                        onChange={onChange}
-                        className="w-full p-3 pl-12 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none shadow-inner"
-                    >
-                        {options.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                    </select>
-                ) : (
-                    <input
-                        type={type}
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        className="w-full p-3 pl-12 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-inner"
-                    />
-                )}
-            </div>
-        </div>
-    );
-
-    return (
-        <form 
-            onSubmit={handleSubmit} 
-            className="p-8 lg:p-12 bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-6xl mx-auto transform hover:shadow-3xl transition-all duration-500"
-        >
-            <h3 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
-                Book Your Trip 📝
-            </h3>
-            
-            {/* Service Tabs - Simple Mock */}
-            <div className="flex justify-center mb-8 space-x-4">
-                <Badge className="bg-blue-100 text-blue-800">Bus</Badge>
-                <Badge className="bg-purple-100 text-purple-800">Flight</Badge>
-                <Badge className="bg-pink-100 text-pink-800">Event</Badge>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end">
-                <InputField 
-                    label="Leaving From" 
-                    icon={MapPin} 
-                    value={formState.from}
-                    onChange={(e) => setFormState({...formState, from: e.target.value})}
-                    options={['Accra', 'Kumasi', 'Takoradi', 'Tamale']}
-                    className="md:col-span-2"
-                />
-                <InputField 
-                    label="Going To" 
-                    icon={MapPin} 
-                    value={formState.to}
-                    onChange={(e) => setFormState({...formState, to: e.target.value})}
-                    options={['Kumasi', 'Accra', 'Cape Coast', 'Ho']}
-                    className="md:col-span-2"
-                />
-                <div className="flex justify-center">
-                    <Button 
-                        type="button" 
-                        variant="outline"
-                        className="w-12 h-12 rounded-full border-blue-400 text-blue-600 hover:bg-blue-50 shadow-lg hover:scale-110"
-                        onClick={() => {
-                            // Swap logic
-                            setFormState(prev => ({...prev, from: prev.to, to: prev.from}))
-                        }}
-                    >
-                        🔄
-                    </Button>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                <InputField 
-                    label="Departure Date" 
-                    type="date" 
-                    icon={Calendar} 
-                    value={formState.date}
-                    onChange={(e) => setFormState({...formState, date: e.target.value})}
-                />
-                <InputField 
-                    label="Passengers" 
-                    type="number" 
-                    icon={Users} 
-                    value={formState.pax}
-                    onChange={(e) => setFormState({...formState, pax: parseInt(e.target.value)})}
-                />
-                <div className="pt-7">
-                    <Button 
-                        type="submit" 
-                        size="lg" 
-                        className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                    >
-                        Search Tickets 🔍
-                    </Button>
-                </div>
-            </div>
-        </form>
-    );
-};
-
-const FeatureCard = ({ icon: Icon, title, description, gradient }) => (
-    <div className="p-8 bg-white rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group">
-        <div className={`p-4 rounded-full inline-flex mb-4 text-white bg-gradient-to-r ${gradient} shadow-lg group-hover:scale-110 transition-transform`}>
-            <Icon className="h-8 w-8" />
-        </div>
-        <h3 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors">{title}</h3>
-        <p className="text-gray-600 leading-relaxed">{description}</p>
-    </div>
-);
-
-const RouteCard = ({ from, to, duration, price }) => (
-    <div className="relative p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
-        <div className="flex items-center justify-between mb-4">
-            <h4 className="text-xl font-bold text-gray-900">
-                {from} <ArrowRight className="inline h-5 w-5 text-purple-500 mx-1" /> {to}
-            </h4>
-            <Badge className="bg-yellow-100 text-yellow-800 text-sm font-semibold py-1">Hot 🔥</Badge>
-        </div>
-        <div className="flex justify-between text-gray-600 border-t pt-4">
-            <div className="flex items-center space-x-2">
-                <Clock className="h-5 w-5 text-blue-500" />
-                <span className="font-medium">{duration}</span>
-            </div>
-            <div className="flex items-center space-x-2 font-bold text-lg text-green-600">
-                <DollarSign className="h-6 w-6" />
-                <span>{price}</span>
-            </div>
-        </div>
-        <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 rounded-xl">Book Now</Button>
-    </div>
-);
-
-const EventCard = ({ title, date, time, location, price, category, rating, attendees }) => (
-    <div className="flex flex-col md:flex-row bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden transform hover:-translate-y-1 transition-all duration-500">
-        <div className="md:w-1/3 bg-gray-100 flex items-center justify-center p-6 text-7xl font-bold text-center bg-gradient-to-br from-purple-100 to-pink-100">
-            {title.includes('Afronation') ? '🎶' : title.includes('League') ? '⚽' : title.includes('Tech') ? '💻' : '🍽️'}
-        </div>
-        <div className="p-6 md:p-8 flex flex-col justify-between md:w-2/3">
-            <div>
-                <Badge className="bg-pink-100 text-pink-800 mb-2">{category}</Badge>
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 leading-snug">
-                    {title}
-                </h3>
-                <div className="space-y-2 text-gray-600">
-                    <p className="flex items-center text-lg"><Calendar className="h-5 w-5 mr-2 text-blue-500" /> {date} @ {time}</p>
-                    <p className="flex items-center text-lg"><MapPin className="h-5 w-5 mr-2 text-purple-500" /> {location}</p>
-                </div>
-            </div>
-            
-            <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-                <div>
-                    <div className="text-sm text-gray-500">Starting Price</div>
-                    <div className="text-3xl font-bold text-red-600">{price}</div>
-                </div>
-                <Button className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 rounded-xl px-6 py-3 shadow-lg">
-                    Get Tickets
-                </Button>
-            </div>
-        </div>
-    </div>
-);
-
-const TestimonialCarousel = () => {
-    // Mock testimonial data (will display 3 mock cards)
-    const testimonials = useMemo(() => ([
-        { name: "Ama K.", city: "Accra", quote: "Booking buses has never been easier! The USSD service is a lifesaver when my data runs out. Five stars!", rating: 5, avatar: "👩‍💼" },
-        { name: "Kofi A.", city: "Kumasi", quote: "Got tickets for the league finals instantly. No queues, no hassle. mTicket is the future of ticketing in Ghana.", rating: 5, avatar: "👨‍💻" },
-        { name: "John M.", city: "Takoradi", quote: "Used the platform to book a flight to Lagos. Great prices and the fastest checkout I've seen. Highly recommended!", rating: 4, avatar: "👨‍🎓" }
-    ]), []);
-
-    return (
-        <div className="p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl shadow-xl h-full flex flex-col justify-between border-4 border-blue-100 transition-all duration-500 hover:shadow-2xl">
-            <div className="text-7xl mb-4 text-yellow-500">
-                <Star className="inline-block h-8 w-8 fill-yellow-500 text-yellow-500" />
-                <Star className="inline-block h-8 w-8 fill-yellow-500 text-yellow-500" />
-                <Star className="inline-block h-8 w-8 fill-yellow-500 text-yellow-500" />
-                <Star className="inline-block h-8 w-8 fill-yellow-500 text-yellow-500" />
-                <Star className="inline-block h-8 w-8 fill-yellow-500 text-yellow-500" />
-            </div>
-            <p className="text-xl italic text-gray-700 leading-relaxed mb-6">
-                "{testimonials[0].quote}"
-            </p>
-            <div className="flex items-center">
-                <div className="text-4xl mr-4">{testimonials[0].avatar}</div>
-                <div>
-                    <p className="font-bold text-lg text-gray-900">{testimonials[0].name}</p>
-                    <p className="text-sm text-blue-600">{testimonials[0].city}</p>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const BusShowcase = () => (
-    <div className="relative p-8 md:p-12 bg-gray-900 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
-        <div className="absolute inset-0 opacity-10 bg-repeat" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/black-linen.png')" }}></div>
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-center text-white">
-            <div>
-                <h3 className="text-4xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-red-400 bg-clip-text text-transparent">
-                    Luxury & Comfort Guaranteed
-                </h3>
-                <p className="text-lg text-gray-300 mb-6">
-                    We partner only with top-tier operators offering the best in intercity travel.
-                </p>
-                <ul className="space-y-3 text-lg text-gray-200">
-                    <li className="flex items-center"><CheckCircle className="h-6 w-6 mr-3 text-green-400" /> High-speed Wi-Fi & Charging Ports</li>
-                    <li className="flex items-center"><CheckCircle className="h-6 w-6 mr-3 text-green-400" /> Fully Reclining Seats & Blankets</li>
-                    <li className="flex items-center"><CheckCircle className="h-6 w-6 mr-3 text-green-400" /> On-board Entertainment Screens</li>
-                    <li className="flex items-center"><CheckCircle className="h-6 w-6 mr-3 text-green-400" /> Complimentary Refreshments</li>
-                </ul>
-                <Button className="mt-8 bg-white text-gray-900 hover:bg-gray-100 rounded-xl px-6 py-3">
-                    View Bus Fleet
-                </Button>
-            </div>
-            <div className="relative flex items-center justify-center">
-                {/* Simplified Bus SVG Placeholder */}
-                <div className="w-full max-w-sm h-48 bg-blue-600 rounded-2xl shadow-2xl flex items-center justify-center text-4xl text-white border-4 border-white transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                    <Bus className="h-16 w-16" />
-                    <span className="ml-4 font-extrabold">VIP Coach</span>
-                </div>
-            </div>
-        </div>
-    </div>
-);
-
-const PeopleGrid = () => {
-    const people = [
-        { emoji: '👩‍⚕️', role: 'Doctor' }, { emoji: '👨‍💼', role: 'Executive' },
-        { emoji: '👨‍🎓', role: 'Student' }, { emoji: '👵', role: 'Elder' },
-        { emoji: '👨‍🌾', role: 'Farmer' }, { emoji: '🧑‍🎤', role: 'Artist' },
-        { emoji: '👮', role: 'Officer' }, { emoji: '👷', role: 'Worker' }
-    ];
-    
-    return (
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-4 max-w-5xl mx-auto">
-            {people.map((p, index) => (
-                <div key={index} className="text-center p-3 rounded-xl bg-white/70 backdrop-blur-sm shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 transform hover:scale-110">
-                    <div className="text-4xl mb-2">{p.emoji}</div>
-                    <p className="text-xs font-medium text-gray-600">{p.role}</p>
-                </div>
-            ))}
-        </div>
-    );
-};
-
-// --- Main Component ---
-
+// Main App Component
 export default function App() {
     const [isVisible, setIsVisible] = useState(false);
     const [activeService, setActiveService] = useState('bus');
@@ -485,585 +76,126 @@ export default function App() {
         setIsVisible(true);
     }, []);
 
-    const services = [
-        {
-            id: 'bus',
-            icon: Bus,
-            title: "Bus Tickets 🚌",
-            description: "Book comfortable bus rides across Ghana with trusted operators and luxury amenities.",
-            gradient: "from-blue-500 to-blue-600"
-        },
-        {
-            id: 'flight',
-            icon: Plane,
-            title: "Flight Tickets ✈️",
-            description: "Fly to your destination with domestic and international flights at best prices.",
-            gradient: "from-purple-500 to-purple-600"
-        },
-        {
-            id: 'events',
-            icon: Calendar,
-            title: "Event Tickets 🎉",
-            description: "Get tickets to concerts, sports, festivals and entertainment events nationwide.",
-            gradient: "from-pink-500 to-pink-600"
-        }
-    ];
-
-    const features = [
-        {
-            icon: Clock,
-            title: "⚡ Lightning Fast Booking",
-            description: "Book your tickets in under 60 seconds with our AI-powered booking system.",
-            gradient: "from-blue-500 to-blue-600"
-        },
-        {
-            icon: Globe,
-            title: "🌍 Nationwide Coverage",
-            description: "Access 500+ routes, 50+ airlines, and 1000+ events across Ghana and beyond.",
-            gradient: "from-purple-500 to-purple-600"
-        },
-        {
-            icon: DollarSign,
-            title: "💰 Best Price Guarantee",
-            description: "We guarantee the lowest prices with our smart comparison engine and deals.",
-            gradient: "from-green-500 to-green-600"
-        },
-        {
-            icon: Shield,
-            title: "🔒 Bank-Level Security",
-            description: "Your payments and data are protected with military-grade encryption.",
-            gradient: "from-red-500 to-red-600"
-        }
-    ];
-
-    const popularRoutes = [
-        { from: "Accra 🏙️", to: "Kumasi 🌳", duration: "4h 30m", price: "₵45" },
-        { from: "Accra 🏙️", to: "Cape Coast 🏖️", duration: "2h 15m", price: "₵25" },
-        { from: "Accra 🏙️", to: "Takoradi ⛽", duration: "3h 45m", price: "₵35" },
-        { from: "Accra 🏙️", to: "Tamale 🌾", duration: "8h 20m", price: "₵80" },
-        { from: "Kumasi 🌳", to: "Accra 🏙️", duration: "4h 30m", price: "₵45" },
-        { from: "Cape Coast 🏖️", to: "Accra 🏙️", duration: "2h 15m", price: "₵25" }
-    ];
-
-    const upcomingEvents = [
-        {
-            title: "🎵 Afronation Ghana 2025",
-            date: "Dec 28-30, 2025",
-            time: "6:00 PM",
-            location: "Black Star Square, Accra 🏟️",
-            price: "₵150",
-            category: "🎶 Music Festival",
-            rating: 4.8,
-            attendees: 25000
-        },
-        {
-            title: "⚽ Ghana Premier League Finals",
-            date: "Jan 15, 2026",
-            time: "3:00 PM",
-            location: "Baba Yara Stadium, Kumasi 🏟️",
-            price: "₵50",
-            category: "🏆 Sports",
-            rating: 4.6,
-            attendees: 40000
-        },
-        {
-            title: "💻 Tech Innovation Summit",
-            date: "Feb 20-22, 2026",
-            time: "9:00 AM",
-            location: "Accra International Conference Centre 🏢",
-            price: "₵200",
-            category: "🚀 Technology",
-            rating: 4.9,
-            attendees: 5000
-        },
-        {
-            title: "🍽️ Ghana Food & Wine Festival",
-            date: "Mar 10-12, 2026",
-            time: "11:00 AM",
-            location: "Labadi Beach, Accra 🏖️",
-            price: "₵80",
-            category: "🍷 Food & Drink",
-            rating: 4.7,
-            attendees: 15000
-        }
-    ];
-
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 relative overflow-hidden">
-            <AnimatedBackground />
-            
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
             {/* Header */}
-            <header className="relative z-50 bg-white/90 backdrop-blur-md border-b border-white/20 sticky top-0 shadow-lg">
+            <header className="bg-white/90 backdrop-blur-md border-b sticky top-0 z-50 shadow-lg">
                 <div className="container mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3 group">
-                            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                                <Bus className="h-7 w-7 text-white group-hover:animate-pulse" />
+                        <div className="flex items-center space-x-3">
+                            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                                <Bus className="h-7 w-7 text-white" />
                             </div>
-                            <div>
-                                <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                                    mTicket
-                                </span>
-                                <div className="flex items-center space-x-1">
-                                    <Sparkles className="h-4 w-4 text-yellow-500 animate-spin" />
-                                    <span className="text-xs text-gray-600 font-medium">Ghana's #1 Platform</span>
-                                    <Star className="h-4 w-4 text-yellow-500 animate-pulse" />
-                                </div>
-                            </div>
+                            <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">mTicket</span>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50 hover:scale-105 transition-all duration-300 shadow-md">
-                                📍 Track Ticket
-                            </Button>
-                            <Button className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                                👤 Sign In
-                            </Button>
+                            <Button variant="outline">Track Ticket</Button>
+                            <Button>Sign In</Button>
                         </div>
                     </div>
                 </div>
             </header>
 
             {/* Hero Section */}
-            <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
-                <FloatingIcons />
-                
-                <div className="relative z-10 container mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        {/* Left side - Content */}
-                        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                            <Badge className="mb-6 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-blue-800 border-blue-200 px-6 py-3 text-base font-bold animate-bounce shadow-lg">
-                                🚀 Ghana's #1 Multi-Service Booking Platform 🎉
-                            </Badge>
-                            
-                            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
-                                    Travel Smarter
-                                </span>
+            <section className="py-20">
+                <div className="container mx-auto px-6">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                            <Badge className="mb-6 bg-blue-100 text-blue-800">Ghana's #1 Booking Platform</Badge>
+                            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Travel Smarter</span>
                                 <br />
-                                <span className="text-gray-800">Live Better 🌟</span>
+                                <span className="text-gray-800">Live Better</span>
                             </h1>
-                            
-                            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
-                                Your one-stop platform for bus tickets 🚌, flights ✈️, and event bookings 🎫 across Ghana. 
-                                Quick, reliable, and unforgettable experiences await! 🎊
+                            <p className="text-xl text-gray-600 mb-8">
+                                Your one-stop platform for bus tickets, flights, and event bookings across Ghana.
                             </p>
-
-                            <div className="grid grid-cols-3 gap-6 mb-8">
-                                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-                                    <div className="text-3xl mb-2">👥</div>
+                            <div className="grid grid-cols-3 gap-6">
+                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
                                     <AnimatedCounter end={100000} suffix="+" />
-                                    <p className="text-gray-600 text-sm group-hover:text-blue-600 transition-colors">Happy Customers</p>
+                                    <p className="text-gray-600 text-sm">Customers</p>
                                 </div>
-                                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-                                    <div className="text-3xl mb-2">🗺️</div>
+                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
                                     <AnimatedCounter end={500} suffix="+" />
-                                    <p className="text-gray-600 text-sm group-hover:text-purple-600 transition-colors">Routes & Events</p>
+                                    <p className="text-gray-600 text-sm">Routes</p>
                                 </div>
-                                <div className="text-center group hover:scale-110 transition-transform duration-300 bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-                                    <div className="text-3xl mb-2">💖</div>
+                                <div className="text-center bg-white rounded-2xl p-4 shadow-lg">
                                     <AnimatedCounter end={99} suffix="%" />
-                                    <p className="text-gray-600 text-sm group-hover:text-green-600 transition-colors">Satisfaction Rate</p>
+                                    <p className="text-gray-600 text-sm">Satisfaction</p>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Right side - Visual */}
-                        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-                            <HeroVisual />
+                        <div className="bg-white rounded-3xl p-8 shadow-2xl">
+                            <div className="text-center text-8xl mb-4">🎫</div>
+                            <p className="text-2xl font-bold text-center">Your Ticket. Secured.</p>
                         </div>
-                    </div>
-
-                    {/* Service Selection */}
-                    <div className={`transition-all duration-1000 delay-500 mt-16 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Choose Your Journey 🎯</h2>
-                            <p className="text-gray-600 text-lg">Select the service that fits your adventure!</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                            {services.map((service) => (
-                                <ServiceCard
-                                    key={service.id}
-                                    {...service}
-                                    isActive={activeService === service.id}
-                                    onClick={() => setActiveService(service.id)}
-                                />
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Booking Form */}
-                    <div className={`transition-all duration-1000 delay-700 mt-12 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                        <BookingForm />
                     </div>
                 </div>
             </section>
 
-            {/* People Section */}
-            <section className="py-20 bg-white relative overflow-hidden">
+            {/* Services Section */}
+            <section className="py-20 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                            Trusted by Everyone 👨‍👩‍👧‍👦
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                            From business executives to students, families to professionals - everyone chooses mTicket! 🌟
-                        </p>
+                    <h2 className="text-4xl font-bold text-center mb-12">Our Services</h2>
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <div className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl shadow-xl">
+                            <Bus className="h-12 w-12 text-blue-600 mb-4" />
+                            <h3 className="text-2xl font-bold mb-3">Bus Tickets</h3>
+                            <p className="text-gray-600">Book comfortable bus rides across Ghana</p>
+                        </div>
+                        <div className="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-3xl shadow-xl">
+                            <Plane className="h-12 w-12 text-purple-600 mb-4" />
+                            <h3 className="text-2xl font-bold mb-3">Flight Tickets</h3>
+                            <p className="text-gray-600">Fly to your destination at best prices</p>
+                        </div>
+                        <div className="p-8 bg-gradient-to-br from-pink-50 to-pink-100 rounded-3xl shadow-xl">
+                            <Calendar className="h-12 w-12 text-pink-600 mb-4" />
+                            <h3 className="text-2xl font-bold mb-3">Event Tickets</h3>
+                            <p className="text-gray-600">Get tickets to concerts and events</p>
+                        </div>
                     </div>
-                    <PeopleGrid />
                 </div>
             </section>
 
             {/* USSD Section */}
-            <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/10"></div>
-                <div className="absolute inset-0">
-                    <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full animate-ping"></div>
-                    <div className="absolute bottom-10 right-10 w-16 h-16 bg-white/10 rounded-full animate-pulse"></div>
-                    <div className="absolute top-1/2 left-1/4 w-12 h-12 bg-white/10 rounded-full animate-bounce"></div>
-                    <div className="absolute top-1/4 right-1/4 text-6xl animate-bounce">📱</div>
-                    <div className="absolute bottom-1/4 left-1/3 text-4xl animate-pulse">💫</div>
-                </div>
-                <div className="relative z-10 container mx-auto px-6 text-center">
-                    <div className="max-w-4xl mx-auto">
-                        <div className="text-8xl mb-6 animate-bounce">📱</div>
-                        <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                            Try Our USSD Magic! ✨
-                        </h2>
-                        <p className="text-xl mb-8 opacity-90">
-                            Book bus tickets from ANY phone across Ghana! No internet needed! 🚀
-                        </p>
-                        <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-12 mb-8 inline-block hover:scale-105 transition-transform duration-300 shadow-2xl">
-                            <p className="text-3xl mb-4 font-bold">Just Dial 📞</p>
-                            <div className="text-8xl font-bold tracking-wider animate-pulse bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                                *265#
-                            </div>
-                            <p className="text-xl mt-4 opacity-90">It's that simple! 🎉</p>
-                        </div>
-                        <div className="flex items-center justify-center space-x-4 text-2xl">
-                            <CheckCircle className="h-8 w-8 animate-pulse" />
-                            <span>Join our <AnimatedCounter end={100000} suffix="+" /> happy users! 🎊</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Features Section */}
-            <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
-                <div className="absolute inset-0">
-                    <div className="absolute top-20 right-20 w-32 h-32 bg-blue-100 rounded-full opacity-50 animate-pulse"></div>
-                    <div className="absolute bottom-20 left-20 w-24 h-24 bg-purple-100 rounded-full opacity-50 animate-bounce"></div>
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-9xl opacity-5">🚀</div>
-                </div>
-                <div className="relative z-10 container mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                            Why Choose mTicket? 🤔
-                            <br />
-                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Because We're Awesome! 🔥</span>
-                        </h2>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                        {features.map((feature, index) => (
-                            <div key={index} className={`transition-all duration-700 delay-${index * 200}`}>
-                                <FeatureCard {...feature} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Bus Showcase */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-6">
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                            Premium Bus Experience 🚌✨
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                            Travel in comfort with our luxury buses featuring modern amenities! 🌟
-                        </p>
-                    </div>
-                    <BusShowcase />
-                </div>
-            </section>
-
-            {/* Dynamic Content Based on Service */}
-            <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
-                <div className="container mx-auto px-6">
-                    <Tabs value={activeService} activeService={activeService} className="w-full">
-                        <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-16 bg-white/90 backdrop-blur-sm shadow-lg">
-                            <TabsTrigger value="bus" activeService={activeService} setActiveService={setActiveService} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
-                                🚌 Bus
-                            </TabsTrigger>
-                            <TabsTrigger value="flight" activeService={activeService} setActiveService={setActiveService} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
-                                ✈️ Flight
-                            </TabsTrigger>
-                            <TabsTrigger value="events" activeService={activeService} setActiveService={setActiveService} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white text-lg font-bold">
-                                🎉 Events
-                            </TabsTrigger>
-                        </TabsList>
-
-                        <TabsContent value="bus" activeService={activeService} className="space-y-8">
-                            <div className="text-center mb-12">
-                                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                                    🔥 Hottest Bus Routes 🚌
-                                </h2>
-                                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                    Choose your favorite operators and enjoy the ride! 🎊
-                                </p>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                                {popularRoutes.map((route, index) => (
-                                    <div key={index} className={`transition-all duration-700 delay-${index * 100}`}>
-                                        <RouteCard {...route} />
-                                    </div>
-                                ))}
-                            </div>
-                        </TabsContent>
-
-                        <TabsContent value="flight" activeService={activeService} className="space-y-8">
-                            <div className="text-center mb-12">
-                                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                                    ✈️ Amazing Flight Deals 🌍
-                                </h2>
-                                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                    Fly anywhere with our trusted airline partners! 🚀
-                                </p>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                                <RouteCard from="Accra 🏙️" to="Lagos 🌆" duration="1h 30m" price="₵450" />
-                                <RouteCard from="Accra 🏙️" to="London 🇬🇧" duration="6h 45m" price="₵2,500" />
-                                <RouteCard from="Accra 🏙️" to="Dubai 🏜️" duration="8h 20m" price="₵3,200" />
-                                <RouteCard from="Kumasi 🌳" to="Accra 🏙️" duration="45m" price="₵180" />
-                                <RouteCard from="Accra 🏙️" to="New York 🗽" duration="12h 30m" price="₵4,800" />
-                                <RouteCard from="Accra 🏙️" to="Johannesburg 🦁" duration="4h 15m" price="₵1,800" />
-                            </div>
-                        </TabsContent>
-
-                        <TabsContent value="events" activeService={activeService} className="space-y-8">
-                            <div className="text-center mb-12">
-                                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                                    🎉 Hottest Events in Ghana! 🔥
-                                    <Sparkles className="inline-block h-10 w-10 ml-2 text-yellow-500 animate-spin" />
-                                </h2>
-                                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                    Don't miss the most exciting events happening across Ghana! 🎊
-                                </p>
-                            </div>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                                {upcomingEvents.map((event, index) => (
-                                    <div key={index} className={`transition-all duration-700 delay-${index * 150}`}>
-                                        <EventCard {...event} />
-                                    </div>
-                                ))}
-                            </div>
-                        </TabsContent>
-                    </Tabs>
-                </div>
-            </section>
-
-            {/* Testimonials Section */}
-            <section className="py-20 bg-white">
-                <div className="container mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                            What Our Customers Say 💬
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                            Real stories from real people who love mTicket! ❤️
-                        </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <TestimonialCarousel />
-                        <TestimonialCarousel />
-                        <TestimonialCarousel />
-                    </div>
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section className="py-20 bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
-                <div className="absolute inset-0">
-                    {Array.from({ length: 100 }, (_, i) => (
-                        <div
-                            key={i}
-                            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                animationDelay: `${Math.random() * 3}s`,
-                                animationDuration: `${2 + Math.random() * 2}s`,
-                            }}
-                        />
-                    ))}
-                    <div className="absolute top-10 left-10 text-6xl animate-bounce">🏆</div>
-                    <div className="absolute bottom-10 right-10 text-6xl animate-pulse">⭐</div>
-                    <div className="absolute top-1/3 right-1/4 text-4xl animate-spin" style={{ animationDuration: '8s' }}>🎯</div>
-                </div>
-                <div className="relative z-10 container mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-6xl font-bold mb-12">
-                        Amazing Numbers! 📊✨
-                    </h2>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-                        <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                            <div className="text-6xl mb-4">🎫</div>
-                            <AnimatedCounter end={1000000} suffix="+" />
-                            <p className="text-gray-300 mt-2 text-lg">Tickets Sold</p>
-                        </div>
-                        <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                            <div className="text-6xl mb-4">🏆</div>
-                            <AnimatedCounter end={50} suffix="+" />
-                            <p className="text-gray-300 mt-2 text-lg">Awards Won</p>
-                        </div>
-                        <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                            <div className="text-6xl mb-4">💖</div>
-                            <AnimatedCounter end={98} suffix="%" />
-                            <p className="text-gray-300 mt-2 text-lg">Love Rate</p>
-                        </div>
-                        <div className="group hover:scale-110 transition-transform duration-300 bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl">
-                            <div className="text-6xl mb-4">⭐</div>
-                            <span className="font-bold text-5xl bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">4.9</span>
-                            <p className="text-gray-300 mt-2 text-lg">App Rating</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/10"></div>
-                <div className="absolute inset-0">
-                    <div className="absolute top-10 left-10 text-8xl animate-bounce">🚀</div>
-                    <div className="absolute bottom-10 right-10 text-6xl animate-pulse">✨</div>
-                    <div className="absolute top-1/3 right-1/3 text-4xl animate-spin" style={{ animationDuration: '6s' }}>🎉</div>
-                </div>
-                <div className="relative z-10 container mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                        Ready for Your Next Adventure? 🌟
-                    </h2>
-                    <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
-                        Join thousands of satisfied customers and experience the future of booking in Ghana! 🎊
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-12 py-6 text-xl font-bold hover:scale-110 transition-all duration-300 shadow-2xl rounded-2xl">
-                            🚀 Get Started Now
-                            <ArrowRight className="ml-3 h-6 w-6" />
-                        </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 px-12 py-6 text-xl font-bold hover:scale-110 transition-all duration-300 rounded-2xl">
-                            📱 Download App
-                            <Smartphone className="ml-3 h-6 w-6" />
-                        </Button>
+            <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                <div className="container mx-auto px-6 text-center">
+                    <div className="text-6xl mb-6">📱</div>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Try Our USSD Service</h2>
+                    <p className="text-xl mb-8">Book from ANY phone! No internet needed!</p>
+                    <div className="bg-white/20 backdrop-blur-sm rounded-3xl p-8 inline-block">
+                        <p className="text-2xl mb-2">Just Dial</p>
+                        <div className="text-6xl font-bold">*265#</div>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
-                <div className="absolute inset-0">
-                    <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500/10 rounded-full animate-pulse"></div>
-                    <div className="absolute bottom-10 right-10 w-16 h-16 bg-purple-500/10 rounded-full animate-bounce"></div>
-                    <div className="absolute top-1/2 left-1/3 text-4xl opacity-10">🚌</div>
-                    <div className="absolute bottom-1/3 right-1/4 text-3xl opacity-10">✈️</div>
-                </div>
-                <div className="relative z-10 container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        {/* Brand */}
-                        <div className="space-y-4">
-                            <div className="flex items-center space-x-3 group">
-                                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg">
-                                    <Bus className="h-7 w-7 text-white" />
-                                </div>
-                                <div>
-                                    <span className="text-3xl font-bold">mTicket</span>
-                                    <div className="flex items-center space-x-1">
-                                        <Sparkles className="h-4 w-4 text-yellow-400 animate-spin" />
-                                        <span className="text-xs text-gray-400">Ghana's Favorite</span>
-                                        <Star className="h-4 w-4 text-yellow-400 animate-pulse" />
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="text-gray-400">
-                                Ghana's leading multi-service booking platform for smart travelers and event enthusiasts! 🌟
-                            </p>
-                        </div>
-
-                        {/* Quick Links */}
+            <footer className="bg-gray-900 text-white py-12">
+                <div className="container mx-auto px-6">
+                    <div className="grid md:grid-cols-3 gap-8">
                         <div>
-                            <h3 className="text-xl font-bold mb-4 text-blue-400">Quick Links 🔗</h3>
-                            <ul className="space-y-3 text-gray-400">
-                                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">👤</span>Create Account</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">📍</span>Track Ticket</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">ℹ️</span>About Us</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">🔄</span>Rebook</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors hover:translate-x-2 transform duration-300 block flex items-center"><span className="mr-2">🔒</span>Privacy Policy</a></li>
+                            <h3 className="text-xl font-bold mb-4">mTicket</h3>
+                            <p className="text-gray-400">Ghana's leading booking platform</p>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">Contact</h3>
+                            <div className="space-y-2 text-gray-400">
+                                <p className="flex items-center"><Phone className="h-5 w-5 mr-2" /> 030-398-1595</p>
+                                <p className="flex items-center"><Mail className="h-5 w-5 mr-2" /> support@photmediaghana.com</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold mb-4">Services</h3>
+                            <ul className="space-y-2 text-gray-400">
+                                <li>Bus Booking</li>
+                                <li>Flight Booking</li>
+                                <li>Event Tickets</li>
                             </ul>
-                        </div>
-
-                        {/* Services */}
-                        <div>
-                            <h3 className="text-xl font-bold mb-4 text-purple-400">Our Services 🎯</h3>
-                            <ul className="space-y-3 text-gray-400">
-                                <li className="flex items-center space-x-3 hover:text-white transition-colors">
-                                    <span className="text-2xl">🚌</span>
-                                    <span>Bus Booking</span>
-                                </li>
-                                <li className="flex items-center space-x-3 hover:text-white transition-colors">
-                                    <span className="text-2xl">✈️</span>
-                                    <span>Flight Booking</span>
-                                </li>
-                                <li className="flex items-center space-x-3 hover:text-white transition-colors">
-                                    <span className="text-2xl">🎉</span>
-                                    <span>Event Tickets</span>
-                                </li>
-                                <li className="flex items-center space-x-3 hover:text-white transition-colors">
-                                    <span className="text-2xl">📱</span>
-                                    <span>USSD Service</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        {/* Contact */}
-                        <div>
-                            <h3 className="text-xl font-bold mb-4 text-pink-400">Contact Us 📞</h3>
-                            <div className="space-y-4 text-gray-400">
-                                <div className="flex items-center space-x-3 hover:text-white transition-colors group">
-                                    <Phone className="h-6 w-6 group-hover:animate-ring text-green-400" />
-                                    <span className="text-lg font-medium">030-398-1595</span>
-                                </div>
-                                <div className="flex items-center space-x-3 hover:text-white transition-colors group">
-                                    <Mail className="h-6 w-6 group-hover:animate-bounce text-blue-400" />
-                                    <span>support@photmediaghana.com</span>
-                                </div>
-                            </div>
-                            
-                            <div className="mt-6">
-                                <h4 className="text-lg font-bold mb-4 text-yellow-400">Follow Us 📱</h4>
-                                <div className="flex space-x-4">
-                                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
-                                        <span className="text-xl">📘</span>
-                                    </div>
-                                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-blue-400 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
-                                        <span className="text-xl">🐦</span>
-                                    </div>
-                                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-pink-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
-                                        <span className="text-xl">📸</span>
-                                    </div>
-                                    <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-red-600 transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-12 shadow-lg">
-                                        <span className="text-xl">📺</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-                    <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                        <p className="text-lg">&copy; 2025 mTicket Ghana. All rights reserved. Made with ❤️ for Ghana! 🇬🇭</p>
+                    <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                        <p>&copy; 2025 mTicket Ghana. All rights reserved.</p>
                     </div>
                 </div>
             </footer>
