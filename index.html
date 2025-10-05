@@ -43,6 +43,12 @@
                 radial-gradient(circle at 50% 80%, rgba(245, 166, 35, 0.08) 0%, transparent 50%),
                 repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(212, 165, 116, 0.02) 50px, rgba(212, 165, 116, 0.02) 51px),
                 repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(4, 120, 87, 0.02) 50px, rgba(4, 120, 87, 0.02) 51px);
+            animation: patternShift 30s ease-in-out infinite;
+        }
+
+        @keyframes patternShift {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
         }
 
         .floating-orbs {
@@ -209,6 +215,20 @@
         .nav-btns {
             display: flex;
             gap: 1rem;
+            align-items: center;
+        }
+
+        .points-badge {
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: badgePulse 2s ease-in-out infinite;
         }
 
         .btn {
@@ -241,6 +261,163 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 28px rgba(212, 165, 116, 0.5);
+        }
+
+        /* Chat Bot */
+        .chatbot {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 2000;
+        }
+
+        .chat-button {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(212, 165, 116, 0.6);
+            transition: all 0.3s;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 90px;
+            right: 0;
+            width: 380px;
+            height: 550px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        .chat-window.open {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .chat-close {
+            background: rgba(255, 0, 0, 0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-close:hover {
+            background: rgba(255, 0, 0, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            padding: 1rem 1.25rem;
+            border-radius: 15px;
+            max-width: 80%;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .message.bot {
+            background: rgba(212, 165, 116, 0.1);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            align-self: flex-start;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            align-self: flex-end;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.875rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #d4a574;
+        }
+
+        .chat-input button {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-input button:hover {
+            transform: scale(1.05);
         }
 
         /* Hero Section with Character */
@@ -500,6 +677,480 @@
             line-height: 1.6;
         }
 
+        /* Mood Based Booking */
+        .mood-booking {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05), rgba(4, 120, 87, 0.05));
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .mood-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .mood-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 165, 116, 0.5);
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .mood-icon {
+            font-size: 80px;
+            margin-bottom: 1rem;
+            animation: moodPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes moodPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .mood-card:nth-child(2) .mood-icon { animation-delay: 0.5s; }
+        .mood-card:nth-child(3) .mood-icon { animation-delay: 1s; }
+        .mood-card:nth-child(4) .mood-icon { animation-delay: 1.5s; }
+
+        .mood-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .mood-desc {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Interactive Map */
+        .interactive-map {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .map-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-top: 3rem;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-pin {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            animation: pinBounce 2s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(212, 165, 116, 0.6);
+        }
+
+        @keyframes pinBounce {
+            0%, 100% { transform: rotate(-45deg) translateY(0); }
+            50% { transform: rotate(-45deg) translateY(-10px); }
+        }
+
+        .pin-1 { top: 30%; left: 20%; animation-delay: 0s; }
+        .pin-2 { top: 50%; left: 50%; animation-delay: 0.5s; }
+        .pin-3 { top: 40%; right: 25%; animation-delay: 1s; }
+        .pin-4 { bottom: 30%; left: 40%; animation-delay: 1.5s; }
+
+        .map-pin:hover {
+            transform: rotate(-45deg) scale(1.3);
+            animation: none;
+        }
+
+        .map-info {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            display: none;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .map-pin:hover .map-info {
+            display: block;
+        }
+
+        /* Games Section */
+        .games-section {
+            padding: 100px 0;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(212, 165, 116, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .game-icon {
+            font-size: 100px;
+            margin-bottom: 1.5rem;
+            animation: gameFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes gameFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        .game-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .game-desc {
+            color: #999;
+            margin-bottom: 2rem;
+        }
+
+        .game-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.6);
+        }
+
+        /* Spin Wheel */
+        .wheel-pointer {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #d4a574;
+            z-index: 10;
+        }
+
+        .spin-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border-radius: 50%;
+            border: 5px solid #000;
+            color: #000;
+            font-weight: 900;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(212, 165, 116, 0.6);
+        }
+
+        .spin-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Scratch Card */
+        .scratch-canvas {
+            width: 100%;
+            height: 300px;
+            border-radius: 16px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+        }
+
+        /* Community Stories */
+        .community-section {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .story-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 165, 116, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 1rem;
+        }
+
+        .story-name {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-text {
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .story-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Referral Challenge */
+        .referral-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(4, 120, 87, 0.1));
+        }
+
+        .referral-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .referral-code {
+            font-size: 48px;
+            font-weight: 900;
+            color: #d4a574;
+            letter-spacing: 8px;
+            margin: 2rem 0;
+            padding: 1.5rem 3rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            display: inline-block;
+            border: 2px dashed rgba(212, 165, 116, 0.5);
+        }
+
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .referral-stat {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .referral-stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: #d4a574;
+            margin-bottom: 0.5rem;
+        }
+
+        .referral-stat-label {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* App Store Section */
+        .app-store-section {
+            padding: 120px 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 21, 16, 0.8));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-mockup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .mockup-image {
+            text-align: center;
+            font-size: 400px;
+            animation: floatPhone 4s ease-in-out infinite;
+        }
+
+        @keyframes floatPhone {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .app-content h2 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 2rem;
+        }
+
+        .app-content p {
+            font-size: 20px;
+            color: #ccc;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .app-badges {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .app-badge {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .app-badge:hover {
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            border-color: transparent;
+            transform: translateY(-5px);
+        }
+
+        .app-badge:hover .badge-text {
+            color: #000;
+        }
+
+        .badge-icon {
+            font-size: 36px;
+        }
+
+        .badge-text {
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+
+        .badge-label {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .badge-store {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .coming-soon-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: #999;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
         /* Stats */
         .stats {
             padding: 100px 0;
@@ -543,38 +1194,12 @@
             font-weight: 600;
         }
 
-        /* USSD Mega Section */
+        /* USSD Section */
         .ussd-mega {
             padding: 120px 0;
             background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(4, 120, 87, 0.15));
             position: relative;
             overflow: hidden;
-        }
-
-        .ussd-sparkles {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            animation: sparkle 3s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
         }
 
         .ussd-content {
@@ -676,314 +1301,6 @@
             font-size: 28px;
         }
 
-        /* Services */
-        .services {
-            padding: 120px 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .section-title {
-            font-size: 64px;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            letter-spacing: -2px;
-        }
-
-        .section-subtitle {
-            font-size: 20px;
-            color: #999;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 3rem;
-            transition: all 0.4s;
-            cursor: pointer;
-        }
-
-        .service-card:hover {
-            transform: translateY(-12px);
-            border-color: rgba(212, 165, 116, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .service-icon {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(212, 165, 116, 0.4);
-        }
-
-        .service-title {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .service-desc {
-            font-size: 16px;
-            color: #999;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 15px;
-            color: #ccc;
-            font-weight: 600;
-        }
-
-        .check-icon {
-            width: 18px;
-            height: 18px;
-            background: rgba(4, 120, 87, 0.2);
-            border: 1px solid #047857;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: #10b981;
-        }
-
-        /* Routes */
-        .routes {
-            padding: 120px 0;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .routes-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .route-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .route-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(212, 165, 116, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .route-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .route-name {
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .route-price {
-            font-size: 22px;
-            font-weight: 900;
-            color: #d4a574;
-        }
-
-        .route-details {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .route-btn {
-            width: 100%;
-            padding: 12px;
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            border-radius: 10px;
-            color: #d4a574;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .route-btn:hover {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
-            border-color: transparent;
-        }
-
-        /* Events */
-        .events {
-            padding: 120px 0;
-        }
-
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .event-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-            cursor: pointer;
-        }
-
-        .event-card:hover {
-            transform: translateY(-12px);
-            border-color: rgba(212, 165, 116, 0.3);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
-        }
-
-        .event-image {
-            height: 220px;
-            background: linear-gradient(135deg, #1a1a1a, #2a2010);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 72px;
-        }
-
-        .event-body {
-            padding: 2rem;
-        }
-
-        .event-date {
-            font-size: 13px;
-            color: #d4a574;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .event-title {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-        }
-
-        .event-location {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .event-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            border: none;
-            border-radius: 10px;
-            color: #000;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .event-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.5);
-        }
-
-        /* Hotels Coming Soon */
-        .hotels-soon {
-            padding: 120px 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), transparent);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hotels-content {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hotels-character {
-            font-size: 200px;
-            margin-bottom: 2rem;
-            animation: floatCharacter 5s ease-in-out infinite;
-        }
-
-        .coming-soon-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            animation: badgePulse 2s ease-in-out infinite;
-        }
-
-        .hotels-title {
-            font-size: 56px;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-        }
-
-        .hotels-desc {
-            font-size: 20px;
-            color: #999;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-
-        .notify-btn {
-            padding: 18px 40px;
-            background: rgba(212, 165, 116, 0.2);
-            border: 2px solid #d4a574;
-            border-radius: 12px;
-            color: #fff;
-            font-weight: 800;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .notify-btn:hover {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
-            transform: translateY(-2px);
-        }
-
         /* Footer */
         footer {
             padding: 80px 0 40px;
@@ -1068,29 +1385,11 @@
         @media (max-width: 1200px) {
             .hero h1 { font-size: 72px; }
             .section-title { font-size: 52px; }
-            .ussd-title { font-size: 56px; }
-            .ussd-code { font-size: 72px; }
             .hero-grid { grid-template-columns: 1fr; }
             .character-main { font-size: 200px; }
-        }
-
-        @media (max-width: 1024px) {
-            .interactive-cards {
-                grid-template-columns: 1fr;
-            }
-            .services-grid,
-            .events-grid {
-                grid-template-columns: 1fr;
-            }
-            .routes-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .mood-grid { grid-template-columns: repeat(2, 1fr); }
+            .games-grid { grid-template-columns: repeat(2, 1fr); }
+            .app-mockup { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -1098,19 +1397,15 @@
             .hero h1 { font-size: 48px; }
             nav { display: none; }
             .stats-grid,
-            .routes-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-title { font-size: 36px; }
-            .ussd-title { font-size: 40px; }
-            .ussd-code { font-size: 56px; }
-            .ussd-box { padding: 3rem 4rem; }
+            .mood-grid,
+            .games-grid,
+            .stories-grid { grid-template-columns: 1fr; }
             .character-main { font-size: 150px; }
+            .interactive-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Dynamic Background -->
     <div class="bg-dynamic"></div>
     <div class="bg-pattern"></div>
     <div class="floating-orbs">
@@ -1132,17 +1427,40 @@
                 </div>
                 <nav>
                     <a href="#services">Services</a>
-                    <a href="#routes">Routes</a>
-                    <a href="#events">Events</a>
+                    <a href="#games">Win Prizes</a>
+                    <a href="#community">Community</a>
                     <a href="#contact">Contact</a>
                 </nav>
                 <div class="nav-btns">
-                    <button class="btn btn-ghost">Track Order</button>
+                    <div class="points-badge">
+                        <span>⭐</span>
+                        <span>1,250 Points</span>
+                    </div>
                     <button class="btn btn-primary">Sign In</button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot">
+        <div class="chat-button" onclick="toggleChat()">🤖</div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>🤖 mTicket Assistant</h3>
+                <button class="chat-close" onclick="toggleChat()">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hey! I'm your travel assistant. Need help booking a trip? 🚌
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Ask me anything..." id="chatInput" onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero -->
     <section class="hero">
@@ -1198,8 +1516,8 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number" data-count="100">0</div>
-                    <div class="stat-label">Thousand Customers</div>
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label">Happy Customers</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number">500+</div>
@@ -1217,15 +1535,188 @@
         </div>
     </section>
 
-    <!-- USSD Mega Section -->
-    <section class="ussd-mega">
-        <div class="ussd-sparkles">
-            <div class="sparkle" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
-            <div class="sparkle" style="top: 40%; left: 80%; animation-delay: 1s;"></div>
-            <div class="sparkle" style="top: 60%; left: 25%; animation-delay: 2s;"></div>
-            <div class="sparkle" style="top: 80%; left: 70%; animation-delay: 1.5s;"></div>
-            <div class="sparkle" style="top: 30%; right: 20%; animation-delay: 0.5s;"></div>
+    <!-- Mood Based Booking -->
+    <section class="mood-booking">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How Are You Feeling?</h2>
+                <p class="section-subtitle">Let your mood guide your next adventure</p>
+            </div>
+            <div class="mood-grid">
+                <div class="mood-card" onclick="moodSelect('adventure')">
+                    <div class="mood-icon">🏃</div>
+                    <h3 class="mood-title">Adventurous</h3>
+                    <p class="mood-desc">Explore Cape Coast beaches</p>
+                </div>
+                <div class="mood-card" onclick="moodSelect('relax')">
+                    <div class="mood-icon">😌</div>
+                    <h3 class="mood-title">Relaxed</h3>
+                    <p class="mood-desc">Visit Akosombo tranquility</p>
+                </div>
+                <div class="mood-card" onclick="moodSelect('party')">
+                    <div class="mood-icon">🎉</div>
+                    <h3 class="mood-title">Party Mode</h3>
+                    <p class="mood-desc">Accra nightlife awaits</p>
+                </div>
+                <div class="mood-card" onclick="moodSelect('cultural')">
+                    <div class="mood-icon">🏛️</div>
+                    <h3 class="mood-title">Cultural</h3>
+                    <p class="mood-desc">Kumasi heritage tour</p>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Interactive Map -->
+    <section class="interactive-map">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explore Ghana</h2>
+                <p class="section-subtitle">Click on cities to see available trips and experiences</p>
+            </div>
+            <div class="map-container">
+                <div class="map-pin pin-1">
+                    <div class="map-info">
+                        <strong>Accra</strong><br>
+                        50+ daily trips<br>
+                        15 events this month
+                    </div>
+                </div>
+                <div class="map-pin pin-2">
+                    <div class="map-info">
+                        <strong>Kumasi</strong><br>
+                        40+ daily trips<br>
+                        10 cultural events
+                    </div>
+                </div>
+                <div class="map-pin pin-3">
+                    <div class="map-info">
+                        <strong>Tamale</strong><br>
+                        20+ daily trips<br>
+                        5 events
+                    </div>
+                </div>
+                <div class="map-pin pin-4">
+                    <div class="map-info">
+                        <strong>Cape Coast</strong><br>
+                        30+ daily trips<br>
+                        Beach festivals
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="games-section" id="games">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Win Free Tickets!</h2>
+                <p class="section-subtitle">Play, win, and travel for free</p>
+            </div>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">🎡</div>
+                    <h3 class="game-title">Spin & Win</h3>
+                    <p class="game-desc">Spin the wheel daily for free tickets and discounts</p>
+                    <button class="game-btn" onclick="openSpinWheel()">Spin Now</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🎫</div>
+                    <h3 class="game-title">Scratch Card</h3>
+                    <p class="game-desc">Scratch to reveal instant prizes and bonus points</p>
+                    <button class="game-btn" onclick="openScratch()">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🎰</div>
+                    <h3 class="game-title">Lucky Seat</h3>
+                    <p class="game-desc">Random seats get upgraded to VIP for free</p>
+                    <button class="game-btn" onclick="playLuckySeat()">Try Luck</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spin Wheel Modal -->
+    <div class="wheel-modal" id="wheelModal">
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="wheel" id="wheel"></div>
+            <button class="spin-btn" onclick="spinWheel()">SPIN</button>
+        </div>
+    </div>
+
+    <!-- Community Stories -->
+    <section class="community-section" id="community">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Traveler Stories</h2>
+                <p class="section-subtitle">Real experiences from our community</p>
+            </div>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <div class="story-avatar">👨</div>
+                    <div class="story-name">Kwame A.</div>
+                    <p class="story-text">"Won a free ticket from the scratch game! Used it for my trip to Kumasi. This platform is amazing!"</p>
+                    <div class="story-meta">
+                        <span>❤️ 234 likes</span>
+                        <span>💬 12 comments</span>
+                    </div>
+                </div>
+                <div class="story-card">
+                    <div class="story-avatar">👩</div>
+                    <div class="story-name">Ama D.</div>
+                    <p class="story-text">"Booked my first flight ever through mTicket. The chatbot helped me every step. So easy!"</p>
+                    <div class="story-meta">
+                        <span>❤️ 189 likes</span>
+                        <span>💬 8 comments</span>
+                    </div>
+                </div>
+                <div class="story-card">
+                    <div class="story-avatar">👨</div>
+                    <div class="story-name">Kofi M.</div>
+                    <p class="story-text">"The mood-based booking is genius! Picked 'adventurous' and discovered Cape Coast. Best weekend ever!"</p>
+                    <div class="story-meta">
+                        <span>❤️ 312 likes</span>
+                        <span>💬 24 comments</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Referral Challenge -->
+    <section class="referral-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Invite Friends, Win Together</h2>
+                <p class="section-subtitle">Share your code and both of you get rewards</p>
+            </div>
+            <div class="referral-card">
+                <h3>Your Referral Code</h3>
+                <div class="referral-code" id="refCode">MTK2025</div>
+                <button class="btn-hero btn-hero-primary" onclick="copyRefCode()">Copy & Share</button>
+                
+                <div class="referral-stats">
+                    <div class="referral-stat">
+                        <div class="referral-stat-number">12</div>
+                        <div class="referral-stat-label">Friends Referred</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-stat-number">2,400</div>
+                        <div class="referral-stat-label">Points Earned</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-stat-number">3</div>
+                        <div class="referral-stat-label">Free Tickets Won</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USSD -->
+    <section class="ussd-mega">
         <div class="container">
             <div class="ussd-content">
                 <div class="ussd-icon">📱</div>
@@ -1260,241 +1751,39 @@
         </div>
     </section>
 
-    <!-- Services -->
-    <section class="services" id="services">
+    <!-- App Store Section -->
+    <section class="app-store-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">What Can We Do For You?</h2>
-                <p class="section-subtitle">Three ways to travel smarter. One platform that makes it all effortless.</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🚌</div>
-                    <h3 class="service-title">Bus Booking</h3>
-                    <p class="service-desc">Premium comfort on Ghana's top operators. Real-time tracking, guaranteed seats, and onboard entertainment.</p>
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Live GPS tracking</span>
+            <div class="app-mockup">
+                <div class="mockup-image">📱</div>
+                <div class="app-content">
+                    <div class="coming-soon-tag">LAUNCHING SOON</div>
+                    <h2>Download the mTicket App</h2>
+                    <p>
+                        Get early access to our mobile app. Book faster, track in real-time, 
+                        and never miss exclusive mobile-only deals and games.
+                    </p>
+                    <div class="app-badges">
+                        <div class="app-badge">
+                            <div class="badge-icon">🍎</div>
+                            <div class="badge-text">
+                                <div class="badge-label">Download on the</div>
+                                <div class="badge-store">App Store</div>
+                            </div>
                         </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Reserved seating</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>AC & WiFi included</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>USB charging ports</span>
+                        <div class="app-badge">
+                            <div class="badge-icon">🤖</div>
+                            <div class="badge-text">
+                                <div class="badge-label">Get it on</div>
+                                <div class="badge-store">Google Play</div>
+                            </div>
                         </div>
                     </div>
+                    <p style="font-size: 16px; color: #999; margin-top: 2rem;">
+                        Join the waitlist and be among the first 1,000 users to get 500 bonus points!
+                    </p>
+                    <button class="btn-hero btn-hero-primary" style="margin-top: 2rem;">Join Waitlist</button>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">✈️</div>
-                    <h3 class="service-title">Flight Tickets</h3>
-                    <p class="service-desc">Fly anywhere in Africa and beyond. Compare prices, get instant e-tickets, and travel with confidence.</p>
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Best price guarantee</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Instant confirmation</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Multiple airlines</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Flexible changes</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎉</div>
-                    <h3 class="service-title">Event Tickets</h3>
-                    <p class="service-desc">VIP access to Ghana's hottest concerts, sports matches, and cultural festivals. Never miss out again.</p>
-                    <div class="feature-list">
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Digital delivery</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Early bird pricing</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>Secure checkout</span>
-                        </div>
-                        <div class="feature-item">
-                            <span class="check-icon">✓</span>
-                            <span>VIP upgrades</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Routes -->
-    <section class="routes" id="routes">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Popular Routes</h2>
-                <p class="section-subtitle">Where do you want to go? We've got you covered across Ghana.</p>
-            </div>
-            <div class="routes-grid">
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Accra → Kumasi</div>
-                        <div class="route-price">GH₵80</div>
-                    </div>
-                    <div class="route-details">4 hours · VIP · AC</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Accra → Takoradi</div>
-                        <div class="route-price">GH₵70</div>
-                    </div>
-                    <div class="route-details">5 hours · STC · WiFi</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Kumasi → Tamale</div>
-                        <div class="route-price">GH₵90</div>
-                    </div>
-                    <div class="route-details">6 hours · VIP · Entertainment</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Accra → Cape Coast</div>
-                        <div class="route-price">GH₵50</div>
-                    </div>
-                    <div class="route-details">3 hours · Express · AC</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Accra → Bolgatanga</div>
-                        <div class="route-price">GH₵120</div>
-                    </div>
-                    <div class="route-details">10 hours · VIP · Sleeper</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Kumasi → Sunyani</div>
-                        <div class="route-price">GH₵45</div>
-                    </div>
-                    <div class="route-details">2.5 hours · Express · AC</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Accra → Ho</div>
-                        <div class="route-price">GH₵40</div>
-                    </div>
-                    <div class="route-details">2 hours · VIP · WiFi</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-                <div class="route-card">
-                    <div class="route-header">
-                        <div class="route-name">Takoradi → Kumasi</div>
-                        <div class="route-price">GH₵75</div>
-                    </div>
-                    <div class="route-details">4.5 hours · STC · AC</div>
-                    <button class="route-btn">Book Now</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Events -->
-    <section class="events" id="events">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">What's Happening?</h2>
-                <p class="section-subtitle">Ghana's biggest events are waiting. Get your tickets before they're gone.</p>
-            </div>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-image">🎵</div>
-                    <div class="event-body">
-                        <div class="event-date">December 25, 2025</div>
-                        <h3 class="event-title">Ghana Music Festival</h3>
-                        <div class="event-location">Accra International Conference Centre</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">⚽</div>
-                    <div class="event-body">
-                        <div class="event-date">January 10, 2026</div>
-                        <h3 class="event-title">Black Stars vs Nigeria</h3>
-                        <div class="event-location">Baba Yara Stadium, Kumasi</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">🎭</div>
-                    <div class="event-body">
-                        <div class="event-date">February 14, 2026</div>
-                        <h3 class="event-title">Afro Nation Ghana</h3>
-                        <div class="event-location">Labadi Beach, Accra</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">🎤</div>
-                    <div class="event-body">
-                        <div class="event-date">March 6, 2026</div>
-                        <h3 class="event-title">Independence Day Concert</h3>
-                        <div class="event-location">Black Star Square, Accra</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">🏀</div>
-                    <div class="event-body">
-                        <div class="event-date">April 20, 2026</div>
-                        <h3 class="event-title">Basketball League Finals</h3>
-                        <div class="event-location">Accra Sports Stadium</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">🎪</div>
-                    <div class="event-body">
-                        <div class="event-date">May 1, 2026</div>
-                        <h3 class="event-title">Chale Wote Festival</h3>
-                        <div class="event-location">Jamestown, Accra</div>
-                        <button class="event-btn">Get Tickets</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hotels Coming Soon -->
-    <section class="hotels-soon">
-        <div class="container">
-            <div class="hotels-content">
-                <div class="hotels-character">🏨</div>
-                <div class="coming-soon-badge">COMING SOON</div>
-                <h2 class="hotels-title">Luxury Hotels & Resorts</h2>
-                <p class="hotels-desc">
-                    Premium accommodations across Ghana. Exclusive deals. Instant booking. 
-                    Your perfect stay is almost here.
-                </p>
-                <button class="notify-btn">Notify Me When Live</button>
             </div>
         </div>
     </section>
@@ -1549,42 +1838,104 @@
             header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Counter animation
-        const counters = document.querySelectorAll('.stat-number[data-count]');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.target.textContent === '0') {
-                    const target = parseInt(entry.target.getAttribute('data-count'));
-                    let current = 0;
-                    const increment = target / 60;
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            entry.target.textContent = target + 'K+';
-                            clearInterval(timer);
-                        } else {
-                            entry.target.textContent = Math.floor(current);
-                        }
-                    }, 30);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(counter => counterObserver.observe(counter));
-
-        // Generate sparkles dynamically
-        const sparklesContainer = document.querySelector('.ussd-sparkles');
-        for (let i = 0; i < 20; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.top = Math.random() * 100 + '%';
-            sparkle.style.left = Math.random() * 100 + '%';
-            sparkle.style.animationDelay = Math.random() * 3 + 's';
-            sparklesContainer.appendChild(sparkle);
+        // Chatbot functionality
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('open');
         }
 
-        // Scroll reveal
-        const cards = document.querySelectorAll('.choice-card, .service-card, .route-card, .event-card');
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input.value.trim()) {
+                // User message
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.textContent = input.value;
+                messages.appendChild(userMsg);
+                
+                // Bot response
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot';
+                    const responses = [
+                        "I can help you find the best trips! Where are you heading?",
+                        "Great choice! Let me check available routes for you.",
+                        "I found 5 trips for you. The fastest is VIP Jeoun at 6:00 AM.",
+                        "Would you like me to book that for you?",
+                        "You've earned 50 bonus points! Keep booking to unlock free tickets."
+                    ];
+                    botMsg.textContent = responses[Math.floor(Math.random() * responses.length)];
+                    messages.appendChild(botMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+
+        // Mood-based booking
+        function moodSelect(mood) {
+            const destinations = {
+                adventure: 'Cape Coast beaches',
+                relax: 'Akosombo Dam',
+                party: 'Accra nightlife',
+                cultural: 'Kumasi heritage sites'
+            };
+            alert(`Perfect! Based on your mood, we recommend: ${destinations[mood]}.\n\nIn the real app, this would show you curated trip packages!`);
+        }
+
+        // Spin Wheel
+        function openSpinWheel() {
+            document.getElementById('wheelModal').classList.add('show');
+        }
+
+        let spinning = false;
+        function spinWheel() {
+            if (spinning) return;
+            spinning = true;
+            
+            const wheel = document.getElementById('wheel');
+            const rotation = Math.floor(Math.random() * 360) + 3600; // At least 10 full spins
+            wheel.style.transform = `rotate(${rotation}deg)`;
+            
+            setTimeout(() => {
+                const prizes = ['Free Ticket!', 'GH₵50 Off', '100 Points', 'Try Again', 'VIP Upgrade!', '200 Points', '20% Off', 'Free Ticket!'];
+                const prizeIndex = Math.floor((rotation % 360) / 45);
+                alert(`🎉 Congratulations! You won: ${prizes[prizeIndex]}`);
+                document.getElementById('wheelModal').classList.remove('show');
+                wheel.style.transform = 'rotate(0deg)';
+                spinning = false;
+            }, 4000);
+        }
+
+        // Scratch card
+        function openScratch() {
+            alert('🎫 Scratch Card Game!\n\nIn the full app, you would scratch a digital card to reveal instant prizes.\n\nThis demo shows: You won GH₵20 discount!');
+        }
+
+        // Lucky Seat
+        function playLuckySeat() {
+            const isLucky = Math.random() > 0.7;
+            if (isLucky) {
+                alert('🎰 LUCKY WINNER!\n\nYour seat 12A has been upgraded to VIP for FREE!\n\nEnjoy premium comfort on your next trip.');
+            } else {
+                alert('🎲 Not this time!\n\nBut you earned 10 bonus points for trying.\n\nTry again on your next booking!');
+            }
+        }
+
+        // Referral code copy
+        function copyRefCode() {
+            const code = document.getElementById('refCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert(`✅ Code ${code} copied!\n\nShare it with friends on WhatsApp, Facebook, or SMS.\n\nBoth of you get 100 points when they book their first trip!`);
+            });
+        }
+
+        // Scroll reveal animations
+        const cards = document.querySelectorAll('.choice-card, .mood-card, .game-card, .story-card');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1609,6 +1960,62 @@
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
+
+        // Close modal when clicking outside
+        document.getElementById('wheelModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
+                modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 15px solid #d4a574;
+            background: conic-gradient(
+                from 0deg,
+                #d4a574 0deg 45deg,
+                #f5a623 45deg 90deg,
+                #047857 90deg 135deg,
+                #d4a574 135deg 180deg,
+                #f5a623 180deg 225deg,
+                #047857 225deg 270deg,
+                #d4a574 270deg 315deg,
+                #f5a623 315deg 360deg
+            );
+            position: relative;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .wheel-
