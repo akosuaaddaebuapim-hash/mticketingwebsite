@@ -243,7 +243,7 @@
             box-shadow: 0 6px 28px rgba(212, 165, 116, 0.5);
         }
 
-        /* Hero Section */
+        /* Hero Section with Character */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -252,8 +252,14 @@
             position: relative;
         }
 
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
         .hero-content {
-            max-width: 900px;
             animation: fadeInUp 1s ease;
         }
 
@@ -308,10 +314,6 @@
             line-height: 1.05;
             margin-bottom: 2rem;
             letter-spacing: -3px;
-        }
-
-        .question-text {
-            animation: textShine 3s linear infinite;
         }
 
         .gradient-text {
@@ -372,6 +374,60 @@
             background: rgba(255, 255, 255, 0.1);
             border-color: #d4a574;
             transform: translateY(-4px);
+        }
+
+        /* Character Section */
+        .hero-character {
+            position: relative;
+            text-align: center;
+            animation: floatCharacter 6s ease-in-out infinite;
+        }
+
+        @keyframes floatCharacter {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .character-main {
+            font-size: 280px;
+            line-height: 1;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+        }
+
+        .character-bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            animation: bubblePop 3s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes bubblePop {
+            0%, 100% { transform: scale(1) translateY(0); opacity: 0.9; }
+            50% { transform: scale(1.05) translateY(-5px); opacity: 1; }
+        }
+
+        .bubble-1 {
+            top: 15%;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .bubble-2 {
+            top: 50%;
+            right: -60px;
+            animation-delay: 1.5s;
+        }
+
+        .bubble-3 {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 0.7s;
         }
 
         .interactive-cards {
@@ -865,6 +921,69 @@
             box-shadow: 0 8px 24px rgba(212, 165, 116, 0.5);
         }
 
+        /* Hotels Coming Soon */
+        .hotels-soon {
+            padding: 120px 0;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hotels-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hotels-character {
+            font-size: 200px;
+            margin-bottom: 2rem;
+            animation: floatCharacter 5s ease-in-out infinite;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        .hotels-title {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .hotels-desc {
+            font-size: 20px;
+            color: #999;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .notify-btn {
+            padding: 18px 40px;
+            background: rgba(212, 165, 116, 0.2);
+            border: 2px solid #d4a574;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notify-btn:hover {
+            background: linear-gradient(135deg, #d4a574, #f5a623);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
         /* Footer */
         footer {
             padding: 80px 0 40px;
@@ -951,6 +1070,8 @@
             .section-title { font-size: 52px; }
             .ussd-title { font-size: 56px; }
             .ussd-code { font-size: 72px; }
+            .hero-grid { grid-template-columns: 1fr; }
+            .character-main { font-size: 200px; }
         }
 
         @media (max-width: 1024px) {
@@ -984,6 +1105,7 @@
             .ussd-title { font-size: 40px; }
             .ussd-code { font-size: 56px; }
             .ussd-box { padding: 3rem 4rem; }
+            .character-main { font-size: 150px; }
         }
     </style>
 </head>
@@ -1025,39 +1147,47 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span>100,000+ Travelers Trust Us</span>
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        <span>100,000+ Travelers Trust Us</span>
+                    </div>
+                    <h1>
+                        <span class="question-text">Where Are You Going?</span><br>
+                        <span class="gradient-text">Let's Get You There.</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Bus tickets. Flight bookings. Event access. Everything you need to explore Ghana and beyond. 
+                        Fast. Secure. Always reliable. Your journey starts right here, right now.
+                    </p>
+                    <div class="hero-cta">
+                        <button class="btn-hero btn-hero-primary">Start Booking Now</button>
+                        <button class="btn-hero btn-hero-secondary">See How It Works</button>
+                    </div>
+                    <div class="interactive-cards">
+                        <div class="choice-card">
+                            <span class="card-icon">🚌</span>
+                            <h3 class="card-title">Bus Travel</h3>
+                            <p class="card-desc">Premium VIP coaches with AC, WiFi, and comfort guaranteed across Ghana</p>
+                        </div>
+                        <div class="choice-card">
+                            <span class="card-icon">✈️</span>
+                            <h3 class="card-title">Flights</h3>
+                            <p class="card-desc">Domestic and international routes with instant confirmation</p>
+                        </div>
+                        <div class="choice-card">
+                            <span class="card-icon">🎉</span>
+                            <h3 class="card-title">Events</h3>
+                            <p class="card-desc">Concerts, sports, festivals - never miss the action</p>
+                        </div>
+                    </div>
                 </div>
-                <h1>
-                    <span class="question-text">Where Are You Going?</span><br>
-                    <span class="gradient-text">Let's Get You There.</span>
-                </h1>
-                <p class="hero-desc">
-                    Bus tickets. Flight bookings. Event access. Everything you need to explore Ghana and beyond. 
-                    Fast. Secure. Always reliable. Your journey starts right here, right now.
-                </p>
-                <div class="hero-cta">
-                    <button class="btn-hero btn-hero-primary">Start Booking Now</button>
-                    <button class="btn-hero btn-hero-secondary">See How It Works</button>
-                </div>
-                <div class="interactive-cards">
-                    <div class="choice-card">
-                        <span class="card-icon">🚌</span>
-                        <h3 class="card-title">Bus Travel</h3>
-                        <p class="card-desc">Premium VIP coaches with AC, WiFi, and comfort guaranteed across Ghana</p>
-                    </div>
-                    <div class="choice-card">
-                        <span class="card-icon">✈️</span>
-                        <h3 class="card-title">Flights</h3>
-                        <p class="card-desc">Domestic and international routes with instant confirmation</p>
-                    </div>
-                    <div class="choice-card">
-                        <span class="card-icon">🎉</span>
-                        <h3 class="card-title">Events</h3>
-                        <p class="card-desc">Concerts, sports, festivals - never miss the action</p>
-                    </div>
+                <div class="hero-character">
+                    <div class="character-main">🚌</div>
+                    <div class="character-bubble bubble-1">Real-time GPS</div>
+                    <div class="character-bubble bubble-2">Instant e-Tickets</div>
+                    <div class="character-bubble bubble-3">24/7 Support</div>
                 </div>
             </div>
         </div>
@@ -1349,6 +1479,22 @@
                         <button class="event-btn">Get Tickets</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotels Coming Soon -->
+    <section class="hotels-soon">
+        <div class="container">
+            <div class="hotels-content">
+                <div class="hotels-character">🏨</div>
+                <div class="coming-soon-badge">COMING SOON</div>
+                <h2 class="hotels-title">Luxury Hotels & Resorts</h2>
+                <p class="hotels-desc">
+                    Premium accommodations across Ghana. Exclusive deals. Instant booking. 
+                    Your perfect stay is almost here.
+                </p>
+                <button class="notify-btn">Notify Me When Live</button>
             </div>
         </div>
     </section>
