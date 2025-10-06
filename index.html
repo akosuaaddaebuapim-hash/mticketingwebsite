@@ -23,7 +23,7 @@
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: linear-gradient(135deg, #1a1410 0%, #0f1a15 25%, #1a1008 50%, #0d1412 75%, #1a1410 100%);
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1442 25%, #0d1129 50%, #1b1648 75%, #0a0e27 100%);
             background-size: 400% 400%;
             animation: bgShift 20s ease-in-out infinite;
         }
@@ -38,11 +38,11 @@
             inset: 0;
             z-index: -1;
             background-image: 
-                radial-gradient(circle at 25% 35%, rgba(212, 165, 116, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 75% 65%, rgba(4, 120, 87, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(245, 166, 35, 0.08) 0%, transparent 50%),
-                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(212, 165, 116, 0.02) 50px, rgba(212, 165, 116, 0.02) 51px),
-                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(4, 120, 87, 0.02) 50px, rgba(4, 120, 87, 0.02) 51px);
+                radial-gradient(circle at 25% 35%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 65%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(99, 102, 241, 0.02) 50px, rgba(99, 102, 241, 0.02) 51px),
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(168, 85, 247, 0.02) 50px, rgba(168, 85, 247, 0.02) 51px);
             animation: patternShift 30s ease-in-out infinite;
         }
 
@@ -69,7 +69,7 @@
         .orb-1 {
             width: 400px;
             height: 400px;
-            background: #d4a574;
+            background: #6366f1;
             top: -100px;
             right: -100px;
             animation-duration: 25s;
@@ -78,7 +78,7 @@
         .orb-2 {
             width: 350px;
             height: 350px;
-            background: #047857;
+            background: #a855f7;
             bottom: -100px;
             left: -100px;
             animation-duration: 30s;
@@ -88,7 +88,7 @@
         .orb-3 {
             width: 300px;
             height: 300px;
-            background: #f5a623;
+            background: #3b82f6;
             top: 50%;
             left: 50%;
             animation-duration: 35s;
@@ -114,16 +114,16 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(10, 14, 39, 0.7);
             backdrop-filter: blur(30px);
-            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
             z-index: 1000;
             transition: all 0.3s;
         }
 
         header.scrolled {
-            background: rgba(0, 0, 0, 0.9);
-            border-bottom-color: rgba(212, 165, 116, 0.3);
+            background: rgba(10, 14, 39, 0.9);
+            border-bottom-color: rgba(99, 102, 241, 0.3);
         }
 
         .header-content {
@@ -148,34 +148,34 @@
         .logo-mark {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             font-weight: 900;
-            color: #000;
-            box-shadow: 0 8px 32px rgba(212, 165, 116, 0.4);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
             animation: logoPulse 3s ease-in-out infinite;
         }
 
         @keyframes logoPulse {
-            0%, 100% { box-shadow: 0 8px 32px rgba(212, 165, 116, 0.4); }
-            50% { box-shadow: 0 8px 40px rgba(212, 165, 116, 0.6); }
+            0%, 100% { box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 8px 40px rgba(99, 102, 241, 0.6); }
         }
 
         .logo-text h1 {
             font-size: 26px;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff, #d4a574);
+            background: linear-gradient(135deg, #fff, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .logo-text p {
             font-size: 11px;
-            color: #666;
+            color: #8b8ba7;
             font-weight: 600;
         }
 
@@ -185,7 +185,7 @@
         }
 
         nav a {
-            color: #999;
+            color: #a0a0c0;
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
@@ -200,7 +200,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #d4a574;
+            background: #6366f1;
             transition: width 0.3s;
         }
 
@@ -219,8 +219,8 @@
         }
 
         .points-badge {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-weight: 800;
@@ -243,24 +243,24 @@
 
         .btn-ghost {
             background: transparent;
-            color: #999;
+            color: #a0a0c0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-ghost:hover {
             color: #fff;
-            border-color: rgba(212, 165, 116, 0.5);
+            border-color: rgba(99, 102, 241, 0.5);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
-            box-shadow: 0 4px 20px rgba(212, 165, 116, 0.4);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 28px rgba(212, 165, 116, 0.5);
+            box-shadow: 0 6px 28px rgba(99, 102, 241, 0.5);
         }
 
         /* Chat Bot */
@@ -274,14 +274,14 @@
         .chat-button {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(212, 165, 116, 0.6);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.6);
             transition: all 0.3s;
             animation: bounce 2s ease-in-out infinite;
         }
@@ -301,8 +301,8 @@
             right: 0;
             width: 380px;
             height: 550px;
-            background: rgba(0, 0, 0, 0.95);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            background: rgba(10, 14, 39, 0.95);
+            border: 2px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
             display: none;
             flex-direction: column;
@@ -334,7 +334,7 @@
         }
 
         .chat-close {
-            background: rgba(255, 0, 0, 0.2);
+            background: rgba(239, 68, 68, 0.2);
             border: none;
             width: 32px;
             height: 32px;
@@ -346,7 +346,7 @@
         }
 
         .chat-close:hover {
-            background: rgba(255, 0, 0, 0.4);
+            background: rgba(239, 68, 68, 0.4);
             transform: rotate(90deg);
         }
 
@@ -372,14 +372,14 @@
         }
 
         .message.bot {
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid rgba(212, 165, 116, 0.3);
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             align-self: flex-start;
         }
 
         .message.user {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
             align-self: flex-end;
         }
 
@@ -402,15 +402,15 @@
 
         .chat-input input:focus {
             outline: none;
-            border-color: #d4a574;
+            border-color: #6366f1;
         }
 
         .chat-input button {
             padding: 0.875rem 1.5rem;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border: none;
             border-radius: 10px;
-            color: #000;
+            color: #fff;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
@@ -456,12 +456,12 @@
             align-items: center;
             gap: 10px;
             padding: 10px 24px;
-            background: rgba(212, 165, 116, 0.1);
-            border: 1px solid rgba(212, 165, 116, 0.3);
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 50px;
             font-size: 14px;
             font-weight: 700;
-            color: #d4a574;
+            color: #818cf8;
             margin-bottom: 2rem;
             animation: badgePulse 2s ease-in-out infinite;
         }
@@ -474,9 +474,9 @@
         .badge-dot {
             width: 8px;
             height: 8px;
-            background: #d4a574;
+            background: #818cf8;
             border-radius: 50%;
-            box-shadow: 0 0 16px rgba(212, 165, 116, 0.8);
+            box-shadow: 0 0 16px rgba(129, 140, 248, 0.8);
             animation: dotPulse 1.5s ease-in-out infinite;
         }
 
@@ -494,7 +494,7 @@
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #d4a574 0%, #f5a623 50%, #d4a574 100%);
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -508,7 +508,7 @@
         .hero-desc {
             font-size: 24px;
             line-height: 1.6;
-            color: #ccc;
+            color: #cbd5e1;
             margin-bottom: 3rem;
             animation: fadeInUp 1s ease 0.2s backwards;
         }
@@ -531,25 +531,25 @@
         }
 
         .btn-hero-primary {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
-            box-shadow: 0 12px 40px rgba(212, 165, 116, 0.4);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
         }
 
         .btn-hero-primary:hover {
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 16px 50px rgba(212, 165, 116, 0.6);
+            box-shadow: 0 16px 50px rgba(99, 102, 241, 0.6);
         }
 
         .btn-hero-secondary {
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            border: 2px solid rgba(99, 102, 241, 0.3);
             color: #fff;
         }
 
         .btn-hero-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
-            border-color: #d4a574;
+            border-color: #6366f1;
             transform: translateY(-4px);
         }
 
@@ -573,9 +573,9 @@
 
         .character-bubble {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(99, 102, 241, 0.15);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(212, 165, 116, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
             padding: 12px 20px;
             font-size: 13px;
@@ -629,7 +629,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), transparent);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -640,7 +640,7 @@
 
         .choice-card:hover {
             transform: translateY(-12px) scale(1.02);
-            border-color: rgba(212, 165, 116, 0.4);
+            border-color: rgba(99, 102, 241, 0.4);
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
         }
 
@@ -673,14 +673,14 @@
 
         .card-desc {
             font-size: 15px;
-            color: #999;
+            color: #94a3b8;
             line-height: 1.6;
         }
 
         /* Mood Based Booking */
         .mood-booking {
             padding: 100px 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.05), rgba(4, 120, 87, 0.05));
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
         }
 
         .mood-grid {
@@ -702,8 +702,8 @@
 
         .mood-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(212, 165, 116, 0.5);
-            background: rgba(212, 165, 116, 0.1);
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(99, 102, 241, 0.1);
         }
 
         .mood-icon {
@@ -728,7 +728,7 @@
         }
 
         .mood-desc {
-            color: #999;
+            color: #94a3b8;
             font-size: 14px;
         }
 
@@ -753,12 +753,12 @@
             position: absolute;
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 50% 50% 50% 0;
             transform: rotate(-45deg);
             cursor: pointer;
             animation: pinBounce 2s ease-in-out infinite;
-            box-shadow: 0 4px 20px rgba(212, 165, 116, 0.6);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.6);
         }
 
         @keyframes pinBounce {
@@ -778,8 +778,8 @@
 
         .map-info {
             position: absolute;
-            background: rgba(0, 0, 0, 0.95);
-            border: 1px solid rgba(212, 165, 116, 0.3);
+            background: rgba(10, 14, 39, 0.95);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 12px;
             padding: 1rem;
             display: none;
@@ -819,7 +819,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2), transparent);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -830,7 +830,7 @@
 
         .game-card:hover {
             transform: translateY(-15px);
-            border-color: rgba(212, 165, 116, 0.5);
+            border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
         }
 
@@ -852,14 +852,14 @@
         }
 
         .game-desc {
-            color: #999;
+            color: #94a3b8;
             margin-bottom: 2rem;
         }
 
         .game-btn {
             padding: 1rem 2.5rem;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
             border: none;
             border-radius: 12px;
             font-weight: 800;
@@ -870,10 +870,58 @@
 
         .game-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.6);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
         }
 
-        /* Spin Wheel */
+        /* Spin Wheel Modal */
+        .wheel-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 15px solid #6366f1;
+            background: conic-gradient(
+                from 0deg,
+                #6366f1 0deg 45deg,
+                #a855f7 45deg 90deg,
+                #3b82f6 90deg 135deg,
+                #6366f1 135deg 180deg,
+                #a855f7 180deg 225deg,
+                #3b82f6 225deg 270deg,
+                #6366f1 270deg 315deg,
+                #a855f7 315deg 360deg
+            );
+            position: relative;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
         .wheel-pointer {
             position: absolute;
             top: -30px;
@@ -883,7 +931,7 @@
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 40px solid #d4a574;
+            border-top: 40px solid #6366f1;
             z-index: 10;
         }
 
@@ -894,16 +942,16 @@
             transform: translate(-50%, -50%);
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 50%;
             border: 5px solid #000;
-            color: #000;
+            color: #fff;
             font-weight: 900;
             font-size: 18px;
             cursor: pointer;
             z-index: 20;
             transition: all 0.3s;
-            box-shadow: 0 10px 40px rgba(212, 165, 116, 0.6);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.6);
         }
 
         .spin-btn:hover {
@@ -916,7 +964,7 @@
             height: 300px;
             border-radius: 16px;
             cursor: pointer;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
         }
 
         /* Community Stories */
@@ -943,14 +991,14 @@
 
         .story-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(212, 165, 116, 0.4);
+            border-color: rgba(99, 102, 241, 0.4);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .story-avatar {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -966,7 +1014,7 @@
         }
 
         .story-text {
-            color: #ccc;
+            color: #cbd5e1;
             line-height: 1.7;
             font-size: 15px;
             margin-bottom: 1rem;
@@ -976,18 +1024,18 @@
             display: flex;
             gap: 1.5rem;
             font-size: 13px;
-            color: #666;
+            color: #64748b;
         }
 
         /* Referral Challenge */
         .referral-section {
             padding: 100px 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(4, 120, 87, 0.1));
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
         }
 
         .referral-card {
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            border: 2px solid rgba(99, 102, 241, 0.3);
             border-radius: 30px;
             padding: 4rem;
             text-align: center;
@@ -997,14 +1045,14 @@
         .referral-code {
             font-size: 48px;
             font-weight: 900;
-            color: #d4a574;
+            color: #818cf8;
             letter-spacing: 8px;
             margin: 2rem 0;
             padding: 1.5rem 3rem;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             display: inline-block;
-            border: 2px dashed rgba(212, 165, 116, 0.5);
+            border: 2px dashed rgba(99, 102, 241, 0.5);
         }
 
         .referral-stats {
@@ -1024,19 +1072,19 @@
         .referral-stat-number {
             font-size: 42px;
             font-weight: 900;
-            color: #d4a574;
+            color: #818cf8;
             margin-bottom: 0.5rem;
         }
 
         .referral-stat-label {
-            color: #999;
+            color: #94a3b8;
             font-size: 14px;
         }
 
         /* App Store Section */
         .app-store-section {
             padding: 120px 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 21, 16, 0.8));
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.8), rgba(26, 20, 66, 0.8));
             position: relative;
             overflow: hidden;
         }
@@ -1067,7 +1115,7 @@
 
         .app-content p {
             font-size: 20px;
-            color: #ccc;
+            color: #cbd5e1;
             margin-bottom: 3rem;
             line-height: 1.7;
         }
@@ -1081,7 +1129,7 @@
         .app-badge {
             padding: 1rem 2rem;
             background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            border: 2px solid rgba(99, 102, 241, 0.3);
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -1091,13 +1139,13 @@
         }
 
         .app-badge:hover {
-            background: linear-gradient(135deg, #d4a574, #f5a623);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             border-color: transparent;
             transform: translateY(-5px);
         }
 
         .app-badge:hover .badge-text {
-            color: #000;
+            color: #fff;
         }
 
         .badge-icon {
@@ -1112,7 +1160,7 @@
 
         .badge-label {
             font-size: 11px;
-            color: #999;
+            color: #94a3b8;
         }
 
         .badge-store {
@@ -1122,8 +1170,8 @@
 
         .coming-soon-tag {
             display: inline-block;
-            background: linear-gradient(135deg, #d4a574, #f5a623);
-            color: #000;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
             padding: 8px 20px;
             border-radius: 20px;
             font-size: 14px;
@@ -1146,7 +1194,7 @@
 
         .section-subtitle {
             font-size: 20px;
-            color: #999;
+            color: #94a3b8;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -1175,14 +1223,14 @@
 
         .stat-item:hover {
             transform: translateY(-8px);
-            border-color: rgba(212, 165, 116, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
             background: rgba(255, 255, 255, 0.05);
         }
 
         .stat-number {
             font-size: 56px;
             font-weight: 900;
-            background: linear-gradient(135deg, #fff, #d4a574);
+            background: linear-gradient(135deg, #fff, #a855f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
@@ -1190,14 +1238,14 @@
 
         .stat-label {
             font-size: 15px;
-            color: #999;
+            color: #94a3b8;
             font-weight: 600;
         }
 
         /* USSD Section */
         .ussd-mega {
             padding: 120px 0;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(4, 120, 87, 0.15));
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
             position: relative;
             overflow: hidden;
         }
@@ -1229,16 +1277,16 @@
 
         .ussd-subtitle {
             font-size: 28px;
-            color: #ccc;
+            color: #cbd5e1;
             margin-bottom: 3rem;
             line-height: 1.5;
         }
 
         .ussd-box {
             display: inline-block;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(10, 14, 39, 0.6);
             backdrop-filter: blur(20px);
-            border: 3px solid rgba(212, 165, 116, 0.5);
+            border: 3px solid rgba(99, 102, 241, 0.5);
             border-radius: 30px;
             padding: 4rem 6rem;
             margin-bottom: 3rem;
@@ -1248,32 +1296,32 @@
 
         .ussd-box:hover {
             transform: scale(1.1);
-            border-color: #d4a574;
-            box-shadow: 0 30px 80px rgba(212, 165, 116, 0.4);
+            border-color: #6366f1;
+            box-shadow: 0 30px 80px rgba(99, 102, 241, 0.4);
         }
 
         .ussd-label {
             font-size: 24px;
             font-weight: 700;
-            color: #999;
+            color: #94a3b8;
             margin-bottom: 1rem;
         }
 
         .ussd-code {
             font-size: 96px;
             font-weight: 900;
-            color: #d4a574;
+            color: #818cf8;
             letter-spacing: -3px;
-            text-shadow: 0 0 40px rgba(212, 165, 116, 0.6);
+            text-shadow: 0 0 40px rgba(129, 140, 248, 0.6);
             animation: codeGlow 2s ease-in-out infinite;
         }
 
         @keyframes codeGlow {
             0%, 100% {
-                text-shadow: 0 0 40px rgba(212, 165, 116, 0.6);
+                text-shadow: 0 0 40px rgba(129, 140, 248, 0.6);
             }
             50% {
-                text-shadow: 0 0 60px rgba(212, 165, 116, 0.9);
+                text-shadow: 0 0 60px rgba(129, 140, 248, 0.9);
             }
         }
 
@@ -1289,7 +1337,7 @@
             align-items: center;
             gap: 12px;
             padding: 16px 32px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(10, 14, 39, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             font-size: 18px;
@@ -1305,7 +1353,7 @@
         footer {
             padding: 80px 0 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            background: linear-gradient(to top, #000, rgba(15, 15, 15, 0.5));
+            background: linear-gradient(to top, #0a0e27, rgba(15, 15, 35, 0.5));
         }
 
         .footer-grid {
@@ -1322,7 +1370,7 @@
         }
 
         .footer-brand p {
-            color: #666;
+            color: #64748b;
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
@@ -1347,8 +1395,8 @@
         }
 
         .social-link:hover {
-            background: rgba(212, 165, 116, 0.2);
-            border-color: rgba(212, 165, 116, 0.4);
+            background: rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.4);
             transform: translateY(-3px);
         }
 
@@ -1356,12 +1404,12 @@
             font-size: 16px;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            color: #ccc;
+            color: #cbd5e1;
         }
 
         .footer-column a {
             display: block;
-            color: #666;
+            color: #64748b;
             text-decoration: none;
             margin-bottom: 0.875rem;
             font-weight: 600;
@@ -1369,7 +1417,7 @@
         }
 
         .footer-column a:hover {
-            color: #d4a574;
+            color: #818cf8;
             transform: translateX(5px);
         }
 
@@ -1377,7 +1425,7 @@
             text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #666;
+            color: #64748b;
             font-weight: 600;
         }
 
@@ -1779,7 +1827,7 @@
                             </div>
                         </div>
                     </div>
-                    <p style="font-size: 16px; color: #999; margin-top: 2rem;">
+                    <p style="font-size: 16px; color: #94a3b8; margin-top: 2rem;">
                         Join the waitlist and be among the first 1,000 users to get 500 bonus points!
                     </p>
                     <button class="btn-hero btn-hero-primary" style="margin-top: 2rem;">Join Waitlist</button>
@@ -1970,52 +2018,3 @@
     </script>
 </body>
 </html>
-                modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .wheel-modal.show {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .wheel-container {
-            position: relative;
-            width: 500px;
-            height: 500px;
-        }
-
-        .wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 15px solid #d4a574;
-            background: conic-gradient(
-                from 0deg,
-                #d4a574 0deg 45deg,
-                #f5a623 45deg 90deg,
-                #047857 90deg 135deg,
-                #d4a574 135deg 180deg,
-                #f5a623 180deg 225deg,
-                #047857 225deg 270deg,
-                #d4a574 270deg 315deg,
-                #f5a623 315deg 360deg
-            );
-            position: relative;
-            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-        }
-
-        .wheel-
